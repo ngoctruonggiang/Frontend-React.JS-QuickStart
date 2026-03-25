@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 import "./Login.scss";
 import { FormattedMessage } from "react-intl";
-
+import { handleLoginAPI } from "../../services"; //mac dinh chay vao file index.js
 class Login extends Component {
   /*Contructor voi object lon chua cac state con*/
   constructor(props) {
@@ -13,13 +13,13 @@ class Login extends Component {
       username: "",
       password: "",
       isShowPassword: false,
+      errMessage: "",
     };
   }
   handleOnChangeUsername = (event) => {
     this.setState({
       username: event.target.value,
     });
-    console.log(event.target.value);
   };
   handleOnChangePassword = (event) => {
     this.setState({
@@ -27,21 +27,39 @@ class Login extends Component {
     });
   };
   //ham xu li khi click button login
-  handleLogin = () => {
-    console.log(
-      "username: ",
-      this.state.username,
-      "password: ",
-      this.state.password,
-    );
-    console.log("all state: ", this.state);
+  handleLogin = async () => {
+    this.setState({
+      //reset lai errMessage khi click login
+      errMessage: "",
+    });
+    try {
+      let data = await handleLoginAPI(this.state.username, this.state.password);
+      if (data && data.errCode !== 0) {
+        this.setState({
+          errMessage: data.message,
+        });
+      } 
+      if (data && data.errCode ===0) {
+        this.props.userLoginSuccess(data.user)
+        console.log('Login success', data);
+      }
+      }
+     catch (error) {
+      if (error.response) {
+        if (error.response.data) {
+          this.setState({
+            errMessage: error.response.data.message,
+          });
+        }
+      }
+    }
   };
   //ham an hien con mat password
   handleShowHidePassword = () => {
     this.setState({
-        isShowPassword: !this.state.isShowPassword
-    })
-  }
+      isShowPassword: !this.state.isShowPassword,
+    });
+  };
   //render chỉ được return 1 khối JSX (1 thẻ cha)
   render() {
     /*JSX*/
@@ -73,9 +91,19 @@ class Login extends Component {
                     placeholder="Enter your password"
                     onChange={(event) => this.handleOnChangePassword(event)}
                   />
-                  <span onClick={() => this.handleShowHidePassword()}><i className={this.state.isShowPassword ? "far fa-eye" : "far fa-eye-slash"}></i></span>
-                  
+                  <span onClick={() => this.handleShowHidePassword()}>
+                    <i
+                      className={
+                        this.state.isShowPassword
+                          ? "far fa-eye"
+                          : "far fa-eye-slash"
+                      }
+                    ></i>
+                  </span>
                 </div>
+              </div>
+              <div className="col-12" style={{ color: "red" }}>
+                {this.state.errMessage}
               </div>
               <div className="col-12">
                 <button
@@ -114,9 +142,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     navigate: (path) => dispatch(push(path)),
-    adminLoginSuccess: (adminInfo) =>
-      dispatch(actions.adminLoginSuccess(adminInfo)),
-    adminLoginFail: () => dispatch(actions.adminLoginFail()),
+    userLoginSuccess: (userInfo) =>
+      dispatch(actions.userLoginSuccess(userInfo)),
   };
 };
 
