@@ -1,5 +1,5 @@
 export const adminMenu = [
-    { //hệ thống
+    { //hệ thống khai bao menu de phan quyen
         name: 'menu.system.header', menus: [
             {
                 name: 'menu.system.system-administrator.header',
