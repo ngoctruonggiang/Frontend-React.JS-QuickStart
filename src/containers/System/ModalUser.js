@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import emitter from "../../utils/emitter";
 
 class ModalUser extends Component {
   constructor(props) {
@@ -13,6 +14,20 @@ class ModalUser extends Component {
       lastName: "",
       address: "",
     };
+
+    this.listenToEmitter();//mount function listenToEmitter
+  }
+//emitter help communication by publisher-subscriber pattern
+  listenToEmitter = () => {
+    emitter.on('EVENT_CLEAR_MODAL_DATA', () => {
+      this.setState({
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        address: "",
+      });
+    });
   }
 
   componentDidMount() {}
@@ -79,6 +94,7 @@ class ModalUser extends Component {
                     this.handleOnChangeInput(event, "email");
                   }}
                   value={this.state.email}
+                  autoComplete="nope"
                 />
               </div>
               <div className="input-container">
@@ -89,6 +105,7 @@ class ModalUser extends Component {
                     this.handleOnChangeInput(event, "password");
                   }}
                   value={this.state.password}
+                  autoComplete="new-password"//de tranh trinh duyet tu dong fill password
                 />
               </div>
               <div className="input-container">
