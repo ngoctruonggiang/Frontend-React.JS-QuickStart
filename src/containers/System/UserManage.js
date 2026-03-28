@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import { getAllUsers } from "../../services/userService"; //import 1 function '{}' getAllUsers from userService
+import { getAllUsers, createNewUserService } from "../../services/userService"; //import 1 function '{}' getAllUsers from userService
 import ModalUser from "./ModalUser";
 
 class UserManage extends Component {
@@ -19,16 +19,17 @@ class UserManage extends Component {
   state = {};
 
   async componentDidMount() {
-    //moi lan trigger function setState => render lai component
-    let response = await getAllUsers("ALL");
-    if (response && response.errCode === 0) {
-      this.setState({
-        //setState la ham bat dong bo, nen can async await de doi no xong roi moi lam viec khac
-        arrUsers: response.users,
-      });
-    }
-    console.log("get all users from nodejs:", response);
+    await this.getAllUsersFromReact();
   }
+getAllUsersFromReact = async () => {
+  let response = await getAllUsers("ALL");
+  if (response && response.errCode === 0) {
+    this.setState({
+      //setState la ham bat dong bo, nen can async await de doi no xong roi moi lam viec khac
+      arrUsers: response.users,
+    });
+  }
+}
   /***Life cycle cua class component
    * 1.run constructor -> init state
    * 2.Did mount -> gan gia tri (set state) => React chi lam frontend nen khong biet lay du lieu o dau => can backend de lay du lieu => did mount la noi de goi API de lay du lieu roi set state
@@ -49,14 +50,31 @@ class UserManage extends Component {
         isOpenModalUser: !this.state.isOpenModalUser,
     })
   }
+
+  //de render lai table (component cha) khi nhap thong tin vao modal(component con) xong thi phai fire tu con len cha
+  createNewUser = async (data) => {
+    try {
+      let response = await createNewUserService(data);
+      if (response && response.errCode === 0) {
+        this.setState({
+          isOpenModalUser: false,
+        });
+        await this.getAllUsersFromReact(); //re-render lai table sau khi add user
+      }else{
+        alert(response.errMessage); //hien thong bao loi tu server
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   render() {
-    console.log("check state:", this.state);
     let arrUsers = this.state.arrUsers;
     return (
       <div className="users-container">
         <ModalUser //UserManage goi ModalUser la component con
-        isOpen={this.state.isOpenModalUser}
+        isOpen={this.state.isOpenModalUser}//dang truyen cac props tu cha sang con
         toggleFromParent={this.toggleUserModal}
+        createNewUser={this.createNewUser}//truyen function khong co "()" vi neu co "()" nghia la co tham so thi no se run luon
         //isOpen la bien
         />
         <div className="title text-center">Manage users with eric</div>
@@ -79,7 +97,6 @@ class UserManage extends Component {
             </tr>
             {arrUsers &&
               arrUsers.map((item, index) => {
-                console.log("check map", item, index);
                 return (
                   <tr key={index}>
                     <td>{item.email}</td>

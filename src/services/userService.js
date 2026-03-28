@@ -11,4 +11,9 @@ const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`) //truyen tham so vao url o dang object {key: value}
 
 }
-export { handleLoginAPI, getAllUsers };
+//service tao user trong database 
+const createNewUserService = (data) => {
+    console.log("check data from service: ", data);
+    return axios.post("/api/create-new-user", data);
+}
+export { handleLoginAPI, getAllUsers, createNewUserService };
