@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import { getAllUsers, createNewUserService, deleteUserService} from "../../services/userService"; //import 1 function '{}' getAllUsers from userService
+import { getAllUsers, createNewUserService, deleteUserService, editUserService} from "../../services/userService"; //import 1 function '{}' getAllUsers from userService
 import ModalUser from "./ModalUser";
+import ModalEditUser from "./ModalEditUser";
 import emitter from "../../utils/emitter";
 
 class UserManage extends Component {
@@ -14,6 +15,8 @@ class UserManage extends Component {
     this.state = {
       arrUsers: [],
       isOpenModalUser: false,
+      isOpenModalEditUser: false,
+      userEdit: {},
     };
   }
 
@@ -34,7 +37,6 @@ getAllUsersFromReact = async () => {
 
 //bat su kien xoa user
 handleDeleteUser = async (user) => {
-    console.log("You are clicking delete user", user);
     try{
         let response = await deleteUserService(user.id);
         if(response && response.errCode === 0){
@@ -59,6 +61,27 @@ handleDeleteUser = async (user) => {
         isOpenModalUser: true,
     })
   };
+
+  handleEditUser = (user) => {
+    this.setState({
+        isOpenModalEditUser: true,
+        userEdit: user,
+    })
+  }
+//bat su kien luu thong tin edit user
+  doEditUser = async (data) => {
+    try{
+        let response = await editUserService(data);
+        if(response && response.errCode === 0){
+            this.setState({
+                isOpenModalEditUser: false,
+            })
+            await this.getAllUsersFromReact();//re-render lai table sau khi edit user
+        }
+    }catch(error){//try catch de khi server bi sap thi xuat catch chu khong bi crash (khong mai mai thuc hien function trong try{})
+        console.log(error);
+    }
+  }
 //bat su kien tat modal
   toggleUserModal = () => {
     this.setState({
@@ -66,6 +89,12 @@ handleDeleteUser = async (user) => {
     })
   }
 
+  //bat su kien tat modal edit
+  toggleEditUserModal = () => {
+    this.setState({
+        isOpenModalEditUser: !this.state.isOpenModalEditUser,
+    })
+  }
   //de render lai table (component cha) khi nhap thong tin vao modal(component con) xong thi phai fire tu con len cha
   createNewUser = async (data) => {
     try {
@@ -93,6 +122,14 @@ handleDeleteUser = async (user) => {
         createNewUser={this.createNewUser}//truyen function khong co "()" vi neu co "()" nghia la co tham so thi no se run luon
         //isOpen la bien
         />
+        {this.state.isOpenModalEditUser &&//khi nao click pencil thi moi gan Edit modal vao cay DOM
+        <ModalEditUser //goi component va truyen props tu cha sang con
+        isOpen={this.state.isOpenModalEditUser}
+        toggleFromParent={this.toggleEditUserModal}
+        currentUser={this.state.userEdit}
+        editUser={this.doEditUser}
+        />
+        }
         <div className="title text-center">Manage users with eric</div>
         <div className="mx-1">
           <button
@@ -120,7 +157,8 @@ handleDeleteUser = async (user) => {
                     <td>{item.lastName}</td>
                     <td>{item.address}</td>
                     <td>
-                      <button className="btn-edit">
+                      <button className="btn-edit"
+                      onClick={() => this.handleEditUser(item)}>
                         <i className="fas fa-pencil-alt"></i>{" "}
                       </button>
                       <button className="btn-delete"
