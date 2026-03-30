@@ -17,7 +17,7 @@ const initialState = {
 }
 
 const appReducer = (state = initialState, action) => {
-    switch (action.type) {
+    switch (action.type) { //check action nao duoc gui toi dua vao action.type de xu ly phu hop
         case actionTypes.APP_START_UP_COMPLETE: 
             return {
                 ...state,
@@ -30,6 +30,12 @@ const appReducer = (state = initialState, action) => {
                     ...state.contentOfConfirmModal,
                     ...action.contentOfConfirmModal
                 }
+            }
+        case actionTypes.CHANGE_LANGUAGE:
+            console.log('action in reducer', action)
+            return {
+                ...state,
+                language: action.language
             }
         default:
             return state;

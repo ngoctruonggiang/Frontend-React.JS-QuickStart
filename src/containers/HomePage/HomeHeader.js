@@ -3,9 +3,18 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import logo from "../../assets/images/logo.svg"; // Import logo [00:33:23]
 import "./HomeHeader.scss";
+import { LANGUAGES } from "../../utils/constant";
+import { changeLanguageApp } from "../../store/actions/appActions";
 
 class HomeHeader extends Component {
+
+    changeLanguage = (language) => {
+        this.props.changeLanguageAppRedux(language);
+        //fire redux event: actions
+    }
+
   render() {
+    let language = this.props.language;
     return (
       <React.Fragment>
         {/* <div className="home-header-container">
@@ -108,11 +117,11 @@ class HomeHeader extends Component {
                 <FormattedMessage id="homeheader.support" />
               </div>
               {/* Phần chuyển đổi ngôn ngữ [00:41:35] */}
-              <div className="language-vi">
-                <span>VN</span>
+              <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-en'}>
+                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VN</span>{/* dung function trong react phai boc trong {}*/}
               </div>
-              <div className="language-en">
-                <span>EN</span>
+              <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-vi'}>
+                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span>{/* eslint-disable-line */}
               </div>
             </div>
           </div>
@@ -180,9 +189,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {//truy cap ham nay qua props.changeLanguageAppRedux
   return {
-    
+    changeLanguageAppRedux: (languageData) => dispatch(changeLanguageApp(languageData))//fire action
   };
 };
 

@@ -1,3 +1,4 @@
+//khai bao cac hang so dung chung trong du an de khi sua thi sua 1 cho
 export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
@@ -6,7 +7,7 @@ export const path = {
     SYSTEM: '/system'
 };
 
-export const languages = {
+export const LANGUAGES = {
     VI: 'vi',
     EN: 'en'
 };
