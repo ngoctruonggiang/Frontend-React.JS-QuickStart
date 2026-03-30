@@ -1,33 +1,30 @@
 .home-header-container {
   height: 60px;
-  padding: 0 20px;
+  padding: 0 40px;
   .home-header-content {
     width: 100%;
     height: 100%;
-    border: 1px solid green;
     display: flex;
     .left-content {
       width: 25%;
-      border: 1px solid blue;
       display: flex;
       align-items: center;
       .fa-bars {
         font-size: 25px;
         color: grey;
         cursor: pointer;
+        margin-right: 15px; // Tao khoang cach voi logo
       }
       .header-logo {
-        width: 100%;
-        height: 100%;
-        background-image: url("../../assets/images/logo.svg");
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
+        height: 60%;
+        width: 60%; // Let it grow dynamically
+        margin-left: -40px;
+        cursor: pointer;
+
       }
     }
     .center-content {
       width: 50%;
-      border: 1px solid blue;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -40,10 +37,138 @@
     }
     .right-content {
       width: 25%;
-      border: 1px solid blue;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
+      .support {
+        padding-right: 50px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        
+        i{
+            font-size: 15px;
+            color: grey;
+            margin-right: 5px;
+        }
+      }
+      .language-vi {
+        cursor: pointer;
+        &.active{
+            color: orange;
+        }
+      }
+      .language-en {
+        margin: 0 10px;
+        cursor: pointer;
+        &.active{
+            color: blue;
+        }
+      }
     }
   }
+}
+
+.home-header-banner {
+  height: 500px;
+//   background-image: url("../../assets/images/header-background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  // Sử dụng nhiều lớp background để tạo hiệu ứng phủ đen mờ [00:16:30]
+  background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0)), url("../../assets/images/header-background.jpg");
+  .content-up {
+    height: 65%;
+    padding-top: 20px;
+    .title1 {
+      font-size: 40px;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .title2 {
+      margin-bottom: 15px;
+      font-size: 30px;
+      font-weight: 400;
+      color: #45c3d2;
+      text-transform: uppercase;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .search {
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      align-items: center;
+      padding: 10px;
+      /* width: 400px; */
+      border-radius: 25px;
+      background: #ffc419;
+      i {
+        font-size: 20px;
+        color: #fff;
+        margin: 0 5px;
+      }
+      input {
+        height: 30px;
+        width: 360px;
+        border: none;
+        outline: none;
+        background: transparent;
+      }
+    }
+  }
+  .content-down {
+    height: 35%;
+    display: flex;
+    align-items: flex-end; 
+    justify-content: center;
+    // Hiệu ứng mờ dần màu trắng ở dưới đáy banner [00:51:25]
+    background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,1));
+
+    .options {
+        display: flex;
+        gap: 50px; // Khoảng cách giữa các khối icon [01:03:35]
+        padding-bottom: 20px;
+
+        .option-child {
+            width: 125px;
+            text-align: center;
+            cursor: pointer;
+
+            &:hover {
+                color: #45c3d2; // Đổi màu khi di chuột vào [00:50:41]
+            }
+
+            .icon-child {
+                width: 45px;
+                height: 45px;
+                background: white;
+                margin: 0 auto;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+
+                i {
+                    font-size: 22px;
+                    color: #45c3d2;
+                }
+            }
+
+            .text-child {
+                font-size: 15px;
+                font-weight: 600;
+            }
+        }
+    }
+  }
+
+  
 }

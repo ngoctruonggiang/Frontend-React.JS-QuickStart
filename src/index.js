@@ -18,7 +18,7 @@ const renderApp = () => {
                 <App persistor={persistor}/>
             </IntlProviderWrapper>
         </Provider>,
-        document.getElementById('root')
+        document.getElementById('root') //inject component App vao trong the div co id="root"
     );
 };
 
