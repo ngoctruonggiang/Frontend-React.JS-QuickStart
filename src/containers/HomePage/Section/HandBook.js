@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import "./Specialty.scss";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";//import css cua thu vien slick
 import shogun from "../../../assets/specialty/Raiden.jpg";
 import tuyet from "../../../assets/specialty/TuyettBangDe2.jpg";
 
-class Specialty extends Component {
+class HandBook extends Component {
 
 
   render() {
 
     return (
      <>
-     <div className = "section-share section-specialty">
+     <div className = "section-share section-HandBook">
         <div className = "section-container">
             <div className = "section-header">
                 <span className = "title-section">Chuyên khoa</span>
@@ -24,37 +21,37 @@ class Specialty extends Component {
             <div className="section-body">
                 <Slider {...this.props.settings}>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${shogun})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${tuyet})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${tuyet})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${shogun})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${tuyet})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${shogun})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
                     <div className="section-customize">
-                        <div className="bg-image" 
+                        <div className="bg-image section-handbook" 
                         style={{backgroundImage: `url(${tuyet})`}}></div>
                         <div>Cơ xương khớp 1</div>
                     </div>
@@ -79,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {//truy cap ham nay qua props.changeLan
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default connect(mapStateToProps, mapDispatchToProps)(HandBook);

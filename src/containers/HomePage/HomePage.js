@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeHeader from './HomeHeader';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";//import css cua thu vien slick
 import Specialty from './Section/Specialty';
+import MedicalFacility from './Section/MedicalFacility';
+import OutStandingDoctor from './Section/OutStandingDoctor';
+import HandBook from './Section/HandBook';
+import './HomePage.scss';
 
 class HomePage extends Component {//trang nay import va render cac section
 
     render() {
+         let settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,//so luong slide chuyen khi click
+    };
         return (
             <div>
                 <HomeHeader/>
-                <Specialty/>
+                <Specialty settings={settings}/>
+                <MedicalFacility settings={settings}/>
+                <OutStandingDoctor settings={settings}/>
+                <HandBook settings={settings}/>
             </div>
         );
     }
