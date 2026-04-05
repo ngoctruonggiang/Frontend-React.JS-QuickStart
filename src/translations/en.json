@@ -20,5 +20,18 @@
         "child4": "Medical examination",
         "child5": "Mental health",
         "child6": "Dental examination"
+    },
+    "menu": {
+        "system": {
+            "header": "System",
+            "system-administrator": {
+                "header": "System Administrator",
+                "user-manage": "User Management",
+                "user-redux": "Manage user using Redux"
+            },
+            "system-parameter": {
+                "header": "System Parameter"
+            }
+        }
     }
 }
