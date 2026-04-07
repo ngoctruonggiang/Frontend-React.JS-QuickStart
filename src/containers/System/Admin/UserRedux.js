@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
 import * as actions from '../../../store/actions';
+import './UserRedux.scss';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 class UserRedux extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            genderArr: []
+            genderArr: [],
+            roleArr: [],
+            positionArr: [],
+            previewImageURL: '',
+            isOpen: false,
+            images: []
         }
     }
 
     async componentDidMount() {
         this.props.getGenderStart();
+        this.props.getPositionStart();
+        this.props.getRoleStart();
         // try {
         //     let res = await getAllCodeService('gender');
         //     if (res && res.errCode === 0) {
@@ -35,13 +44,50 @@ class UserRedux extends Component {
                 genderArr: this.props.genderRedux
             })
         }
+        if (prevProps.roleRedux !== this.props.roleRedux) {
+            this.setState({//setState gay ra render lan 2
+                roleArr: this.props.roleRedux
+            })
+        }
+        if (prevProps.positionRedux !== this.props.positionRedux) {
+            this.setState({//setState gay ra render lan 2
+                positionArr: this.props.positionRedux
+            })
+        }
     }
 
+    handleOnChangeImage = (event) => {
+        //event.target.files la mot mang cac file duoc chon
+        //event.target.files[0] la file duoc chon
+        //event.target.files[0].name la ten file duoc chon
+        //event.target.files[0].size la kich thuoc file duoc chon
+        //event.target.files[0].type la loai file duoc chon
+        //event.target.files[0].lastModified la ngay file duoc chon
+        //event.target.files[0].webkitRelativePath la duong dan file duoc chon
+        //event.target.files[0].webkitRelativePath la duong dan file duoc chon
+        let file = event.target.files[0];
+        if (file) {
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImageURL: objectUrl
+            })
+        }
+        console.log('hoi dan it check state component', this.state.previewImageURL);
+    }
+    openPreviewImage = () => {
+        if (!this.state.previewImageURL) return;
+        this.setState({
+            isOpen: true
+        })
+    }
     render() {
         let { genderArr } = this.state; //lay ra state genderArr va luu vao bien genderArr, chi dung khi ten bien trung voi ten state
         let language = this.props.language;
         let genderRedux = this.props.genderRedux;
-        console.log('check genderRedux from props', genderRedux);
+        let isLoadingGender = this.props.isLoadingGender;
+        let roles = this.state.roleArr;
+        let positions = this.state.positionArr;
+        console.log('hoi dan it check state component', this.state);
         return (
             <>
                 <div className="user-redux-container">
@@ -50,6 +96,7 @@ class UserRedux extends Component {
                         <div className="container"> {/*dung bootstrap de can chinh giao dien*/}
                             <div className="row">
                                 <div className="col-12 my-3"><FormattedMessage id="manage-user.title" /></div>
+                                <div className="col-12 my-3">{isLoadingGender === true ? <span>Loading gender...</span> : 'Loaded'}</div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.email" /></label>
                                     <input type="email" className="form-control" />
@@ -91,20 +138,46 @@ class UserRedux extends Component {
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.role" /></label>
                                     <select className="form-control">
-                                        <option>Admin</option>
-                                        <option>User</option>
+                                        {roles && roles.length > 0 &&
+                                            roles.map((item, index) => {
+                                                return (
+                                                    <option key={index}>
+                                                        {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                                    </option>
+                                                )
+                                            })}
                                     </select>
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.position" /></label>
                                     <select className="form-control">
-                                        <option>Admin</option>
-                                        <option>User</option>
+                                        {positions && positions.length > 0 &&
+                                            positions.map((item, index) => {
+                                                return (
+                                                    <option key={index}>
+                                                        {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                                    </option>
+                                                )
+                                            })}
                                     </select>
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.image" /></label>
-                                    <input type="text" className="form-control" />
+                                    <div>
+                                        <input id="preview-image" type="file" className="form-control" hidden
+                                            onChange={(event) => this.handleOnChangeImage(event)}
+                                        />
+                                        <div className="preview-image-container">
+                                            <label className="label-upload" htmlFor="preview-image">Upload image<i className="fas fa-upload"></i></label>{/*dung htmlFor de lien ket input voi label*/}
+                                            <div className="preview-image"
+                                                style={{ backgroundImage: `url(${this.state.previewImageURL})` }}
+                                                onClick={() => this.openPreviewImage()}
+                                            >
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div className="col-12">
                                     <button className="btn btn-primary mt-3"><FormattedMessage id="manage-user.save" /></button>
@@ -113,6 +186,12 @@ class UserRedux extends Component {
                         </div>
                     </div>
 
+                    {this.state.isOpen && (
+                        <Lightbox
+                            mainSrc={this.state.previewImageURL}
+                            onCloseRequest={() => this.setState({ isOpen: false })}
+                        />
+                    )}
                 </div>
             </>
         )
@@ -123,14 +202,19 @@ const mapStateToProps = state => {//gan state cua redux vao props cua component
     return {
         language: state.app.language,
         genderRedux: state.admin.genders,
+        isLoadingGender: state.admin.isLoadingGender,
+        roleRedux: state.admin.roles,
+        positionRedux: state.admin.positions,
+        isLoadingRole: state.admin.isLoadingRole,
+        isLoadingPosition: state.admin.isLoadingPosition,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getGenderStart: () => dispatch(actions.fetchGenderStart()),//ten function : (dispatch)
-        // processLogout: () => dispatch(actions.processLogout()),
-        // changeLanguageAppRedux: (languageData) => dispatch(actions.changeLanguageApp(languageData))//fire action
+        getPositionStart: () => dispatch(actions.fetchPositionStart()),
+        getRoleStart: () => dispatch(actions.fetchRoleStart()),
     };
 };
 
