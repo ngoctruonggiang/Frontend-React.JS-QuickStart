@@ -1,5 +1,6 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService } from "../../services/userService";
+import { getAllCodeService, createNewUserService } from "../../services/userService";
+
 
 // export const fetchGenderStart = () => {
 //     return {
@@ -87,6 +88,35 @@ export const fetchRoleSuccess = (roleData) => {
 export const fetchRoleFailed = () => {
     return {
         type: actionTypes.FETCH_ROLE_FAILED
+    }
+}
+
+export const createNewUser = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.CREATE_USER_START });
+            let res = await createNewUserService(data);
+            console.log('check res create new user: ', res);
+            if (res && res.errCode === 0) {
+                dispatch(createNewUserSuccess(res.data))//dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(createNewUserFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(createNewUserFailed())
+        }
+    }
+}
+export const createNewUserSuccess = (userData) => {
+    return {
+        type: actionTypes.CREATE_USER_SUCCESS,
+        dataUser: userData
+    }
+}
+export const createNewUserFailed = () => {
+    return {
+        type: actionTypes.CREATE_USER_FAILED
     }
 }
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state
