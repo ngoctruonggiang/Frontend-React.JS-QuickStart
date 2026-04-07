@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
+import * as actions from '../../../store/actions';
 class UserRedux extends Component {
 
     constructor(props) {
@@ -13,22 +14,34 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        try {
-            let res = await getAllCodeService('gender');
-            if (res && res.errCode === 0) {
-                this.setState({ //cham ngoi cho lan render tiep theo
-                    genderArr: res.data
-                })
-            }
-        } catch (e) {
-            console.log(e);
+        this.props.getGenderStart();
+        // try {
+        //     let res = await getAllCodeService('gender');
+        //     if (res && res.errCode === 0) {
+        //         this.setState({ //cham ngoi cho lan render tiep theo
+        //             genderArr: res.data
+        //         })
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
+    }
+    componentDidUpdate(prevProps, prevState) {//vi ham nay luon chay nen can check dieu kien de tranh lap vo han
+        //didupdate chay sau khi render
+        //prevProps la props truoc khi render (mang rong), this.props la props sau khi render (duoc nap 3 phan tu tu redux)
+        //[] khac [3]
+        if (prevProps.genderRedux !== this.props.genderRedux) {
+            this.setState({//setState gay ra render lan 2
+                genderArr: this.props.genderRedux
+            })
         }
     }
-
 
     render() {
         let { genderArr } = this.state; //lay ra state genderArr va luu vao bien genderArr, chi dung khi ten bien trung voi ten state
         let language = this.props.language;
+        let genderRedux = this.props.genderRedux;
+        console.log('check genderRedux from props', genderRedux);
         return (
             <>
                 <div className="user-redux-container">
@@ -65,7 +78,7 @@ class UserRedux extends Component {
                                     <label><FormattedMessage id="manage-user.gender" /></label>
                                     <select className="form-control">
                                         {genderArr && genderArr.length > 0 &&
-                                            genderArr.map((item, index) => {//map la for nhung lap qua tung object chu khong phai la index
+                                            genderArr.map((item, index) => {//map la for nhung lap  qua tung object chu khong phai la index
                                                 return (
                                                     <option key={index}>
                                                         {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
@@ -106,14 +119,18 @@ class UserRedux extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => {//gan state cua redux vao props cua component
     return {
         language: state.app.language,
+        genderRedux: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),//ten function : (dispatch)
+        // processLogout: () => dispatch(actions.processLogout()),
+        // changeLanguageAppRedux: (languageData) => dispatch(actions.changeLanguageApp(languageData))//fire action
     };
 };
 
