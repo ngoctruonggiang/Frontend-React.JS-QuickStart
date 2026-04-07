@@ -27,10 +27,16 @@ const deleteUserService = (userId) => {
 const editUserService = (inputData) => {
   return axios.put("/api/edit-user", inputData);
 };
+
+//lay ra du lieu de fill vao cac the select trong phan them user
+const getAllCodeService = (inputType) => {
+  return axios.get(`/api/allcode?type=${inputType}`);
+};
 export {
   handleLoginAPI,
   getAllUsers,
   createNewUserService,
   deleteUserService,
   editUserService,
+  getAllCodeService,
 };

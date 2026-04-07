@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import { connect } from "react-redux";//thu vien trung gian de react giao tiep voi redux
+import { push } from "connected-react-router";//thu vien trung gian de react giao tiep voi redux
 import * as actions from "../../store/actions";
 import "./Login.scss";
 import { FormattedMessage } from "react-intl";
@@ -38,12 +38,12 @@ class Login extends Component {
         this.setState({
           errMessage: data.message,
         });
-      } 
-      if (data && data.errCode ===0) {
+      }
+      if (data && data.errCode === 0) {
         this.props.userLoginSuccess(data.user)
       }
-      }
-     catch (error) {
+    }
+    catch (error) {
       if (error.response) {
         if (error.response.data) {
           this.setState({
