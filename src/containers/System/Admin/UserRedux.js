@@ -6,6 +6,9 @@ import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+import TableManageUser from './TableManageUser';
+
+
 class UserRedux extends Component {
 
     constructor(props) {
@@ -67,6 +70,25 @@ class UserRedux extends Component {
             this.setState({//setState gay ra render lan 2
                 positionArr: arrPositions,
                 position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''//lay key cua phan tu dau tien de gan vao state position
+            })
+        }
+        if (prevProps.listUsers !== this.props.listUsers) {//khi listUsers thay doi thi reset state de xoa du lieu cu
+            let arrGenders = this.state.genderArr;
+            let arrRoles = this.state.roleArr;
+            let arrPositions = this.state.positionArr;
+
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+                avatar: '',
+                previewImageURL: ''
             })
         }
     }
@@ -152,36 +174,43 @@ class UserRedux extends Component {
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.email" /></label>
                                     <input type="email" className="form-control"
+                                        value={email}
                                         onChange={(event) => this.onChangeInput(event, 'email')} />{/* id = email*/}
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.password" /></label>
                                     <input type="password" className="form-control"
+                                        value={password}
                                         onChange={(event) => this.onChangeInput(event, 'password')} />{/* id = password*/}
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.first-name" /></label>
                                     <input type="text" className="form-control"
+                                        value={firstName}
                                         onChange={(event) => this.onChangeInput(event, 'firstName')} />{/* id = firstName*/}
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.last-name" /></label>
                                     <input type="text" className="form-control"
+                                        value={lastName}
                                         onChange={(event) => this.onChangeInput(event, 'lastName')} />{/* id = lastName*/}
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.phone-number" /></label>
                                     <input type="text" className="form-control"
+                                        value={phoneNumber}
                                         onChange={(event) => this.onChangeInput(event, 'phoneNumber')} />{/* id = phoneNumber*/}
                                 </div>
                                 <div className="col-9">
                                     <label><FormattedMessage id="manage-user.address" /></label>
                                     <input type="text" className="form-control"
+                                        value={address}
                                         onChange={(event) => this.onChangeInput(event, 'address')} />{/* id = address*/}
                                 </div>
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.gender" /></label>
                                     <select className="form-control"
+                                        value={gender}
                                         onChange={(event) => this.onChangeInput(event, 'gender')}
                                     >
                                         {genderArr && genderArr.length > 0 &&
@@ -198,6 +227,7 @@ class UserRedux extends Component {
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.role" /></label>
                                     <select className="form-control"
+                                        value={role}
                                         onChange={(event) => this.onChangeInput(event, 'role')}
                                     >
                                         {roles && roles.length > 0 &&
@@ -213,6 +243,7 @@ class UserRedux extends Component {
                                 <div className="col-3">
                                     <label><FormattedMessage id="manage-user.position" /></label>
                                     <select className="form-control"
+                                        value={position}
                                         onChange={(event) => this.onChangeInput(event, 'position')}
                                     >
                                         {positions && positions.length > 0 &&
@@ -244,14 +275,16 @@ class UserRedux extends Component {
 
                                 </div>
                                 <div className="col-12">
-                                    <button className="btn btn-primary mt-3" onClick={() => this.handleSaveUser()}>
+                                    <button className="btn btn-primary my-3" onClick={() => this.handleSaveUser()}>
                                         <FormattedMessage id="manage-user.save" />
                                     </button>
+                                </div>
+                                <div className="col-12">
+                                    <TableManageUser />
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     {this.state.isOpen && (
                         <Lightbox
                             mainSrc={this.state.previewImageURL}
@@ -273,6 +306,7 @@ const mapStateToProps = state => {//gan state cua redux vao props cua component
         positionRedux: state.admin.positions,
         isLoadingRole: state.admin.isLoadingRole,
         isLoadingPosition: state.admin.isLoadingPosition,
+        listUsers: state.admin.users,
     };
 };
 

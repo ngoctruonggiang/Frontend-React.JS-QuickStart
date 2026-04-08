@@ -14,6 +14,8 @@ const initialState = {
     isLoadingGender: false,
     isLoadingPosition: false,
     isLoadingRole: false,
+    users: [],
+    isLoadingUsers: false,
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -75,6 +77,26 @@ const adminReducer = (state = initialState, action) => {
             let copyState = { ...state };
             copyState.isLoadingRole = false;
             copyState.roles = [];
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_USERS_START: {
+            let copyState = { ...state };
+            copyState.isLoadingUsers = true;
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_USERS_SUCCESS: {
+            let copyState = { ...state };
+            copyState.users = action.dataUser;
+            copyState.isLoadingUsers = false;
+            return copyState;//luon luon return state moi khac init state
+        }
+
+        case actionTypes.FETCH_ALL_USERS_FAILED: {
+            let copyState = { ...state };
+            copyState.isLoadingUsers = false;
+            copyState.users = [];
             return copyState;
         }
         default:
