@@ -49,6 +49,7 @@
         "role": "Vai trò",
         "position": "Chức vụ",
         "image": "Ảnh",
-        "save": "Lưu"
+        "save": "Lưu",
+        "edit": "Xác nhận sửa"
     }
 }

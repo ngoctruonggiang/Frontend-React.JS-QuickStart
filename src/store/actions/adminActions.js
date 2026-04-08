@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService } from "../../services/userService";
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService } from "../../services/userService";
 import { toast } from "react-toastify";
 
 // export const fetchGenderStart = () => {
@@ -181,6 +181,38 @@ export const deleteUserSuccess = (userData) => {
 export const deleteUserFailed = () => {
     return {
         type: actionTypes.DELETE_USER_FAILED
+    }
+}
+
+export const editUser = (userData) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.EDIT_USER_START });
+            let res = await editUserService(userData);
+            if (res && res.errCode === 0) {
+                toast.success('Edit user success');
+                dispatch(editUserSuccess(res.data)); //dung keyword dispatch de gui action toi reducer
+                dispatch(fetchAllUsersStart()); // Fetch new list of users after successful deletion
+            } else {
+                toast.error('Edit user failed');
+                dispatch(editUserFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            toast.error('Edit user failed');
+            dispatch(editUserFailed())
+        }
+    }
+}
+export const editUserSuccess = (userData) => {
+    return {
+        type: actionTypes.EDIT_USER_SUCCESS,
+        dataUser: userData
+    }
+}
+export const editUserFailed = () => {
+    return {
+        type: actionTypes.EDIT_USER_FAILED
     }
 }
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state
