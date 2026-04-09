@@ -57,21 +57,21 @@ class UserRedux extends Component {
             let arrGenders = this.props.genderRedux;
             this.setState({//setState gay ra render lan 2
                 genderArr: arrGenders,
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''//lay key cua phan tu dau tien de gan vao state gender
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : ''//lay key cua phan tu dau tien de gan vao state gender
             })
         }
         if (prevProps.roleRedux !== this.props.roleRedux) {
             let arrRoles = this.props.roleRedux;
             this.setState({//setState gay ra render lan 2
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''//lay key cua phan tu dau tien de gan vao state role
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : ''//lay key cua phan tu dau tien de gan vao state role
             })
         }
         if (prevProps.positionRedux !== this.props.positionRedux) {
             let arrPositions = this.props.positionRedux;
             this.setState({//setState gay ra render lan 2
                 positionArr: arrPositions,
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''//lay key cua phan tu dau tien de gan vao state position
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : ''//lay key cua phan tu dau tien de gan vao state position
             })
         }
         if (prevProps.listUsers !== this.props.listUsers) {//khi listUsers thay doi thi reset state de xoa du lieu cu
@@ -86,9 +86,9 @@ class UserRedux extends Component {
                 lastName: '',
                 phoneNumber: '',
                 address: '',
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : '',
                 avatar: '',
                 previewImageURL: '',
                 action: CRUD_ACTIONS.CREATE
@@ -273,7 +273,7 @@ class UserRedux extends Component {
                                         {genderArr && genderArr.length > 0 &&
                                             genderArr.map((item, index) => {//map la for nhung lap  qua tung object chu khong phai la index
                                                 return (
-                                                    <option key={index} value={item.key}>
+                                                    <option key={index} value={item.keyMap}>
                                                         {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                     </option>//dung key de react nhan dien tung the option, khong dung index de lam key
                                                 )
@@ -290,7 +290,7 @@ class UserRedux extends Component {
                                         {roles && roles.length > 0 &&
                                             roles.map((item, index) => {
                                                 return (
-                                                    <option key={index} value={item.key}>
+                                                    <option key={index} value={item.keyMap}>
                                                         {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                     </option>
                                                 )
@@ -306,7 +306,7 @@ class UserRedux extends Component {
                                         {positions && positions.length > 0 &&
                                             positions.map((item, index) => {
                                                 return (
-                                                    <option key={index} value={item.key}>
+                                                    <option key={index} value={item.keyMap}>
                                                         {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                     </option>
                                                 )

@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService } from "../../services/userService";
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getTopDoctorHomeService } from "../../services/userService";
 import { toast } from "react-toastify";
 
 // export const fetchGenderStart = () => {
@@ -126,6 +126,8 @@ export const fetchAllUsersStart = () => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_USERS_START });
             let res = await getAllUsers('ALL');
+            let resTopDoctor = await getTopDoctorHomeService(3);
+            console.log('resTopDoctor: ', resTopDoctor);
             if (res && res.errCode === 0) {
                 toast.success('Fetch all users success');
                 dispatch(fetchAllUsersSuccess(res.users.reverse()))//dung keyword dispatch de gui action toi reducer
@@ -213,6 +215,33 @@ export const editUserSuccess = (userData) => {
 export const editUserFailed = () => {
     return {
         type: actionTypes.EDIT_USER_FAILED
+    }
+}
+export const fetchTopDoctor = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_TOP_DOCTOR_START });
+            let res = await getTopDoctorHomeService(4);
+            if (res && res.errCode === 0) {
+                dispatch(fetchTopDoctorSuccess(res.data)); //dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(fetchTopDoctorFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(fetchTopDoctorFailed())
+        }
+    }
+}
+export const fetchTopDoctorSuccess = (doctorData) => {
+    return {
+        type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
+        dataDoctor: doctorData
+    }
+}
+export const fetchTopDoctorFailed = () => {
+    return {
+        type: actionTypes.FETCH_TOP_DOCTOR_FAILED
     }
 }
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state

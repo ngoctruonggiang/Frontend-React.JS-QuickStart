@@ -16,6 +16,8 @@ const initialState = {
     isLoadingRole: false,
     users: [],
     isLoadingUsers: false,
+    topDoctors: [],
+    isLoadingTopDoctors: false,
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -97,6 +99,29 @@ const adminReducer = (state = initialState, action) => {
             let copyState = { ...state };
             copyState.isLoadingUsers = false;
             copyState.users = [];
+            return copyState;
+        }
+
+        case actionTypes.FETCH_TOP_DOCTOR_START: {
+            let copyState = { ...state };
+            copyState.isLoadingTopDoctors = true;
+            return copyState;
+        }
+
+        case actionTypes.FETCH_TOP_DOCTOR_SUCCESS: {
+            let copyState = { ...state };
+            copyState.topDoctors = action.dataDoctor;/*action la object duoc dispatch tu adminAction {
+        type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
+        dataDoctor: doctorData
+    }*/
+            copyState.isLoadingTopDoctors = false;
+            return copyState;//luon luon return state moi khac init state
+        }
+
+        case actionTypes.FETCH_TOP_DOCTOR_FAILED: {
+            let copyState = { ...state };
+            copyState.isLoadingTopDoctors = false;
+            copyState.topDoctors = [];
             return copyState;
         }
         default:
