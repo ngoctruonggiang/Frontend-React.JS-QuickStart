@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { LANGUAGES } from '../../../utils/constant';
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from '../../../utils';
 import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import TableManageUser from './TableManageUser';
-import { CRUD_ACTIONS } from '../../../utils/constant';
 
 
 class UserRedux extends Component {
@@ -97,7 +96,7 @@ class UserRedux extends Component {
         }
     }
 
-    handleOnChangeImage = (event) => {
+    handleOnChangeImage = async (event) => {
         //event.target.files la mot mang cac file duoc chon
         //event.target.files[0] la file duoc chon
         //event.target.files[0].name la ten file duoc chon
@@ -108,10 +107,16 @@ class UserRedux extends Component {
         //event.target.files[0].webkitRelativePath la duong dan file duoc chon
         let file = event.target.files[0];
         if (file) {
-            let objectUrl = URL.createObjectURL(file);//URL.createObjectURL la ham co san trong window, dung de tao ra mot URL tam thoi cho file duoc chon
+            // let objectUrl = URL.createObjectURL(file);//URL.createObjectURL la ham co san trong window, dung de tao ra mot URL tam thoi cho file duoc chon
+            let base64 = await CommonUtils.getBase64(file);
+            console.log("My base64 string: ", base64); // Just to verify it works
+            // 2. Create the temporary URL for UI preview
+            let objectUrl = URL.createObjectURL(file);
+
+            // 3. Save both to state
             this.setState({
                 previewImageURL: objectUrl,
-                avatar: file,
+                avatar: base64,
             })
         }
     }
@@ -143,7 +148,7 @@ class UserRedux extends Component {
         }
         if (action === CRUD_ACTIONS.EDIT) {//do api create khac voi api edit nen can check action
             //fire redux edit user action
-            this.props.editUserRedux({
+            let dataSent = {
                 id: this.state.userEditId,
                 email: this.state.email,//ten cot trong database: data.key
                 password: this.state.password,
@@ -155,7 +160,9 @@ class UserRedux extends Component {
                 roleId: this.state.role,
                 positionId: this.state.position,
                 avatar: this.state.avatar
-            });
+            };
+            console.log("PAYLOAD SẮP GỬI LÊN NODEJS (EDIT):", dataSent);
+            this.props.editUserRedux(dataSent);
         }
     }
     checkValidateInput = () => {
@@ -178,6 +185,12 @@ class UserRedux extends Component {
         this.setState({ ...copyState }); //cap nhat state
     }
     handleEditUserFromParent = (user) => {
+        let imageBase64 = '';
+        if (user.image && user.image.data) {
+            // Backend sends image as a Buffer object. We convert it back to string
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary');
+        }
+
         this.setState({
             email: user.email,
             password: 'HardCode',
@@ -186,11 +199,12 @@ class UserRedux extends Component {
             address: user.address,
             phoneNumber: user.phoneNumber,
             gender: user.gender,
-            role: user.roleId,
-            position: user.positionId,
+            role: user.roleId || user.role, // Safe fallback
+            position: user.positionId || user.position, // Safe fallback
             action: 'EDIT',
             userEditId: user.id,
-
+            avatar: '',
+            previewImageURL: imageBase64,
         })
     }
     render() {
