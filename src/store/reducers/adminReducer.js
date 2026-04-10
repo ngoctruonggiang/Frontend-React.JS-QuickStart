@@ -110,10 +110,7 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_TOP_DOCTOR_SUCCESS: {
             let copyState = { ...state };
-            copyState.topDoctors = action.dataDoctor;/*action la object duoc dispatch tu adminAction {
-        type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
-        dataDoctor: doctorData
-    }*/
+            copyState.topDoctors = action.dataDoctor;/*action la object duoc dispatch tu adminAction === {type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS, dataDoctor: doctorData}*/
             copyState.isLoadingTopDoctors = false;
             return copyState;//luon luon return state moi khac init state
         }

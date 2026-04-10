@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./MedicalFacility.scss"; // Sửa lại chữ M viết hoa cho đúng tên file
 import Slider from "react-slick";
-
+import { FormattedMessage } from "react-intl";
 import shogun from "../../../assets/specialty/Raiden.jpg";
 import tuyet from "../../../assets/specialty/TuyettBangDe2.jpg";
 
@@ -17,7 +17,7 @@ class MedicalFacility extends Component {
             <div className="section-header">
               <span className="title-section">Cơ sở y tế nổi bật</span>
               <button className="btn-section">
-                Tìm kiếm
+                <FormattedMessage id="homepage.more-info" />
               </button>
             </div>
             <div className="section-body">

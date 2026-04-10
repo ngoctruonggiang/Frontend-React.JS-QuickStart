@@ -15,22 +15,22 @@ import './HomePage.scss';
 class HomePage extends Component {//trang nay import va render cac section
 
     render() {
-         let settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,//so luong slide chuyen khi click
-    };
+        let settings = {
+            dots: false,
+            infinite: false,
+            speed: 500,
+            slidesToShow: 4,
+            slidesToScroll: 1,//so luong slide chuyen khi click
+        };
         return (
             <div>
-                <HomeHeader/>
-                <Specialty settings={settings}/>
-                <MedicalFacility settings={settings}/>
-                <OutStandingDoctor settings={settings}/>
-                <HandBook settings={settings}/>
-                <About/>
-                <HomeFooter/>
+                <HomeHeader />
+                <Specialty settings={settings} />
+                <MedicalFacility settings={settings} />
+                <OutStandingDoctor settings={settings} />
+                <HandBook settings={settings} />
+                <About />
+                <HomeFooter />
             </div>
         );
     }

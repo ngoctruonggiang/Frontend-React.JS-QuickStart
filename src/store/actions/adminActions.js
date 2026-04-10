@@ -221,7 +221,7 @@ export const fetchTopDoctor = () => {
     return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.FETCH_TOP_DOCTOR_START });
-            let res = await getTopDoctorHomeService(4);
+            let res = await getTopDoctorHomeService(10);
             if (res && res.errCode === 0) {
                 dispatch(fetchTopDoctorSuccess(res.data)); //dung keyword dispatch de gui action toi reducer
             } else {
