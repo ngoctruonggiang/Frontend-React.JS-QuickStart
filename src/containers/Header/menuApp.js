@@ -11,7 +11,7 @@ export const adminMenu = [
 
             },
             {
-                name: 'menu.admin.manage-doctor', link: '/system/user-doctor',//ten cua menu con
+                name: 'menu.admin.manage-doctor', link: '/system/manage-doctor',//ten cua menu con
                 // subMenus: [
                 //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },//link den trang user-manage
                 //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },//link den trang user-redux
