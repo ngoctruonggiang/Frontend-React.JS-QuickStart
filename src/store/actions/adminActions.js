@@ -1,5 +1,9 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getTopDoctorHomeService } from "../../services/userService";
+import {
+    getAllCodeService, createNewUserService, getAllUsers,
+    deleteUserService, editUserService, getTopDoctorHomeService,
+    getAllDoctorsService, saveDetailDoctorService
+} from "../../services/userService";
 import { toast } from "react-toastify";
 
 // export const fetchGenderStart = () => {
@@ -244,4 +248,48 @@ export const fetchTopDoctorFailed = () => {
         type: actionTypes.FETCH_TOP_DOCTOR_FAILED
     }
 }
+export const fetchAllDoctors = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_DOCTORS_START });
+            let res = await getAllDoctorsService();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data)); //dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(fetchAllDoctorsFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(fetchAllDoctorsFailed())
+        }
+    }
+}
+export const fetchAllDoctorsSuccess = (doctorData) => {
+    return {
+        type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+        dataDoctor: doctorData
+    }
+}
+export const fetchAllDoctorsFailed = () => {
+    return {
+        type: actionTypes.FETCH_ALL_DOCTORS_FAILED
+    }
+}
+export const saveDetailDoctor = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.SAVE_DETAIL_DOCTOR_START });
+            let res = await saveDetailDoctorService(data);
+            if (res && res.errCode === 0) {
+                toast.success('Save detail doctor success');
+            } else {
+                toast.error('Save detail doctor failed');
+            }
+        } catch (e) {
+            console.log(e);
+            toast.error('Save detail doctor failed');
+        }
+    }
+}
+
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state
