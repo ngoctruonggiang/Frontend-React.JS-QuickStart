@@ -1,11 +1,12 @@
+//file nay de hien thi header ung voi tung vai tro khi nguoi dung da login
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu } from './menuApp';
+import { adminMenu, doctorMenu } from './menuApp';
 import './Header.scss';
-import { LANGUAGES } from '../../utils/constant';
+import { LANGUAGES, USER_ROLE } from '../../utils/constant';
 
 class Header extends Component {
 
@@ -13,13 +14,22 @@ class Header extends Component {
         this.props.changeLanguageAppRedux(language);//day language tu ham xu li click sang ham dispatch cua redux
     }
 
+    buildMenu = (userInfo) => {//ham nay de xay dung menu ung voi tung vai tro
+        let menu = [];
+        if (userInfo && userInfo.roleId === USER_ROLE.ADMIN) {
+            menu = adminMenu;
+        } else if (userInfo && userInfo.roleId === USER_ROLE.DOCTOR) {
+            menu = doctorMenu;
+        }
+        return menu;
+    }
     render() {
         const { processLogout, language, userInfo } = this.props;
         return (
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={adminMenu} />
+                    <Navigator menus={this.buildMenu(userInfo)} />
                 </div>
                 <div className="languages">
                     <span className="welcome"><FormattedMessage id="homeheader.welcome" />, <span> </span>

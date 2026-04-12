@@ -1,3 +1,4 @@
+//file nay de quan li cac route lon cua ung dung tu do se chuyen den cac route con tuong ung
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
@@ -18,6 +19,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "../containers/Patient/Doctor/DetailDoctor";
+import Doctor from "../routes/Doctor";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -64,6 +66,10 @@ class App extends Component {
                   <Route
                     path={path.DETAIL_DOCTOR}
                     component={DetailDoctor}
+                  />
+                  <Route
+                    path={path.DOCTOR}
+                    component={Doctor}
                   />
                 </Switch>
               </CustomScrollbars>
