@@ -20,6 +20,8 @@ const initialState = {
     isLoadingTopDoctors: false,
     allDoctors: [],
     isLoadingAllDoctors: false,
+    scheduleTime: [],
+    isLoadingScheduleTime: false,
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -141,6 +143,26 @@ const adminReducer = (state = initialState, action) => {
             let copyState = { ...state };
             copyState.isLoadingAllDoctors = false;
             copyState.allDoctors = [];
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_SCHEDULE_TIME_START: {
+            let copyState = { ...state };
+            copyState.isLoadingScheduleTime = true;
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_SCHEDULE_TIME_SUCCESS: {
+            let copyState = { ...state };
+            copyState.scheduleTime = action.dataScheduleTime;/*action la object duoc dispatch tu adminAction === {type: actionTypes.FETCH_ALL_SCHEDULE_TIME_SUCCESS, dataScheduleTime: scheduleTimeData}*/
+            copyState.isLoadingScheduleTime = false;
+            return copyState;//luon luon return state moi khac init state
+        }
+
+        case actionTypes.FETCH_ALL_SCHEDULE_TIME_FAILED: {
+            let copyState = { ...state };
+            copyState.isLoadingScheduleTime = false;
+            copyState.scheduleTime = [];
             return copyState;
         }
         default:

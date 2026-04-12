@@ -292,4 +292,32 @@ export const saveDetailDoctor = (data) => {
     }
 }
 
+export const fetchAllScheduleTime = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_SCHEDULE_TIME_START });
+            let res = await getAllCodeService('TIME');
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllScheduleTimeSuccess(res.data)); //dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(fetchAllScheduleTimeFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(fetchAllScheduleTimeFailed())
+        }
+    }
+}
+export const fetchAllScheduleTimeSuccess = (scheduleTimeData) => {
+    return {
+        type: actionTypes.FETCH_ALL_SCHEDULE_TIME_SUCCESS,
+        dataScheduleTime: scheduleTimeData
+    }
+}
+export const fetchAllScheduleTimeFailed = () => {
+    return {
+        type: actionTypes.FETCH_ALL_SCHEDULE_TIME_FAILED
+    }
+}
+
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state

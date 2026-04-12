@@ -69,7 +69,7 @@ class App extends Component {
                   />
                   <Route
                     path={path.DOCTOR}
-                    component={Doctor}
+                    component={userIsAuthenticated(Doctor)} //phai co userIsAuthenticated de kiem tra da login chua
                   />
                 </Switch>
               </CustomScrollbars>

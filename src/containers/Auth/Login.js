@@ -59,6 +59,11 @@ class Login extends Component {
       isShowPassword: !this.state.isShowPassword,
     });
   };
+  handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      this.handleLogin();
+    }
+  };
   //render chỉ được return 1 khối JSX (1 thẻ cha)
   render() {
     /*JSX*/
@@ -78,7 +83,10 @@ class Login extends Component {
                   value={this.state.username}
                   onChange={(event) =>
                     this.handleOnChangeUsername(event)
-                  } /*event cua html*/
+                  }
+                  onKeyDown={(event) => this.handleKeyDown(event)}
+                  autoComplete="off"
+                /*event cua html*/
                 />
               </div>
               <div className="col-12 form-group login-input">
@@ -89,6 +97,8 @@ class Login extends Component {
                     type={this.state.isShowPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     onChange={(event) => this.handleOnChangePassword(event)}
+                    onKeyDown={(event) => this.handleKeyDown(event)}//nhan phim enter
+                    autoComplete="off"
                   />
                   <span onClick={() => this.handleShowHidePassword()}>
                     <i
