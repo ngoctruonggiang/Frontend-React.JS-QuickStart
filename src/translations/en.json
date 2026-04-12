@@ -55,5 +55,10 @@
     "homepage": {
         "out-standing-doctor": "Outstanding doctor",
         "more-info": "More info"
+    },
+    "manage-doctor": {
+        "title": "Add new doctor information",
+        "save": "Save doctor information",
+        "edit": "Confirm edit doctor information"
     }
 }

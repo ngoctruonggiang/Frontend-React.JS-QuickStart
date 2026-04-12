@@ -55,5 +55,10 @@
     "homepage": {
         "out-standing-doctor": "Bác sĩ nổi bật tuần qua",
         "more-info": "Xem thêm"
+    },
+    "manage-doctor": {
+        "title": "Thêm mới thông tin bác sĩ",
+        "save": "Lưu thông tin bác sĩ",
+        "edit": "Xác nhận sửa thông tin bác sĩ"
     }
 }

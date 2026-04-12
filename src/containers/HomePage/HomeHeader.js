@@ -5,6 +5,7 @@ import logo from "../../assets/images/logo.svg"; // Import logo [00:33:23]
 import "./HomeHeader.scss";
 import { LANGUAGES } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions/appActions";
+import { withRouter } from "react-router-dom";
 
 class HomeHeader extends Component {
 
@@ -12,7 +13,11 @@ class HomeHeader extends Component {
     this.props.changeLanguageAppRedux(language);
     //fire redux event: actions
   }
-
+  returnToHome = () => {
+    if (this.props.history) {
+      this.props.history.push('/home');
+    }
+  }
   render() {
     let language = this.props.language;
     return (
@@ -22,7 +27,7 @@ class HomeHeader extends Component {
           <div className="home-header-content">
             <div className="left-content">
               <i className="fas fa-bars"></i>
-              <img className="header-logo" src={logo} />{/* neu chi de url thi sau khi render react chi hieu la chuoi string khong biet do la url cua anh */}
+              <img className="header-logo" src={logo} onClick={this.returnToHome} />{/* neu chi de url thi sau khi render react chi hieu la chuoi string khong biet do la url cua anh. Dung react router de chuyen trang bang cach import withRouter va boc withRouter vao component*/}
             </div>
             <div className="center-content">
               <div className="child-content">
@@ -152,4 +157,4 @@ const mapDispatchToProps = (dispatch) => {//truy cap ham nay qua props.changeLan
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

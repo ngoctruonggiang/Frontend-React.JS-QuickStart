@@ -7,7 +7,8 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CRUD_ACTIONS } from '../../../utils';
+import { getDetailDoctorService } from '../../../services/userService';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);//dich tu markdown sang html
 
@@ -24,6 +25,7 @@ class ManageDoctor extends Component {
             selectedDoctor: null,
             description: '',
             listDoctors: [],
+            hasOldData: false,
 
         };
     }
@@ -68,25 +70,47 @@ class ManageDoctor extends Component {
         })
     }
     handleSaveContentMarkdown() {
+        let { hasOldData } = this.state;
         this.props.saveDetailDoctor({
             contentMarkdown: this.state.contentMarkdown,
             contentHTML: this.state.contentHTML,
             description: this.state.description,
             doctorId: this.state.selectedDoctor.value,
+            action: hasOldData ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
         });
     }
-    handleChange = (selectedDoctor) => {
-        this.setState({ selectedDoctor }, () =>
-            console.log(`Option selected:`, this.state.selectedDoctor)
-        );
+    handleChangeSelectDoctor = async (selectedDoctor) => {
+        this.setState({ selectedDoctor });
+        let res = await getDetailDoctorService(selectedDoctor.value);//selectedDoctor.value la id cua bac si
+
+        if (res && res.errCode === 0 && res.data && res.data.doctorData
+            && res.data.doctorData.description !== '' && res.data.doctorData.contentMarkdown !== ''
+            && res.data.doctorData.contentHTML !== '') {
+            let doctorData = res.data.doctorData;
+            this.setState({
+                description: doctorData.description,
+                contentMarkdown: doctorData.contentMarkdown,
+                contentHTML: doctorData.contentHTML,
+                hasOldData: true,
+            });
+        } else {
+            this.setState({
+                description: '',
+                contentMarkdown: '',
+                contentHTML: '',
+                hasOldData: false,
+            });
+        }
+
     };
     render() {
+        let { hasOldData } = this.state;
         let { selectedDoctor } = this.state;
         return (
             <>
                 <div className="manage-doctor-container">
                     <div className="manage-doctor-title">
-                        <FormattedMessage id="admin.manage-doctor.title" />
+                        <FormattedMessage id="manage-doctor.title" />
                     </div>
                     <div className="more-infor">
                         <div className="content-left form-group">
@@ -95,7 +119,7 @@ class ManageDoctor extends Component {
                             </label>
                             <Select
                                 value={selectedDoctor}//item duoc chon hien tai cua select gan cho state selectedDoctor
-                                onChange={this.handleChange}
+                                onChange={this.handleChangeSelectDoctor}
                                 options={this.state.listDoctors}//danh sach cac item cua select
                             />
 
@@ -115,12 +139,17 @@ class ManageDoctor extends Component {
                     <div className="manage-doctor-editor">
                         <MdEditor style={{ height: '500px' }}
                             renderHTML={text => mdParser.render(text)}
-                            onChange={this.handleEditorChange} />{/*truyen props */}
+                            onChange={this.handleEditorChange}
+                            value={this.state.contentMarkdown} />{/*truyen props */}
                     </div>
                     <button
                         onClick={() => this.handleSaveContentMarkdown()}
-                        className="save-content-doctor">
-                        <FormattedMessage id="admin.manage-doctor.save" />
+                        className={hasOldData ? "save-content-doctor" : "create-content-doctor"}>
+                        {hasOldData ? (
+                            <span>Luu thong tin</span>
+                        ) : (
+                            <span>Tao thong tin</span>
+                        )}
                     </button>
                 </div >
             </>

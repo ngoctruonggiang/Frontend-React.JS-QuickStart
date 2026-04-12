@@ -1,16 +1,12 @@
 .doctor-detail-container {
     height: 500px;
-    background-color: #f5f5f5;
-    border: 1px solid red;
-    margin: 0 100px;
 
     .intro-doctor {
         display: flex;
-        border: 1px solid green;
+        margin: 0 100px;
 
         .content-left {
             width: 20%;
-            border: 1px solid blue;
             background: center center no-repeat;
             background-size: cover;
             width: 120px;
@@ -41,5 +37,27 @@
                 }
             }
         }
+    }
+
+    .detail-info-doctor {
+        padding: 10px 100px; //tren, phai, duoi, trai theo chieu kim dong ho
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .comment-doctor {
+        height: 100px;
     }
 }
