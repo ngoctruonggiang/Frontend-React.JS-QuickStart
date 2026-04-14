@@ -9,6 +9,7 @@ import { LANGUAGES, dateFormat } from '../../utils';
 import DatePicker from '../../components/Input/DatePicker';
 import moment from 'moment';//dung de format ngay thang
 import { toast } from 'react-toastify';
+import { bulkCreateScheduleService } from '../../services/userService';
 class ManageSchedule extends Component {
     constructor(props) {
         super(props);
@@ -86,7 +87,7 @@ class ManageSchedule extends Component {
             rangeTime: rangeTimeOnClick,
         });
     }
-    handleSaveSchedule = () => {//ham nay de luu lich lam viec cua bac si
+    handleSaveSchedule = async () => {//ham nay de luu lich lam viec cua bac si
         let { selectedDoctor, selectedDate, rangeTime } = this.state;
         let result = [];
         //kiem tra xem da chon bac si va ngay nao chua
@@ -98,7 +99,7 @@ class ManageSchedule extends Component {
             toast.error('Please select a date');
             return;
         }
-        let formatedDate = moment(selectedDate).format(dateFormat.SEND_TO_SERVER);
+        let formatedDate = new Date(selectedDate);//? convert date to unix timestamp
         if (rangeTime && rangeTime.length > 0 && selectedDoctor && selectedDoctor.value) {
             // 1. Filter: Keep only items where isSelected is true
             // 2. Map: Transform those kept items into the final object shape
@@ -113,8 +114,16 @@ class ManageSchedule extends Component {
             toast.error('Invalid selected time');
             return;
         }
-        console.log('check result', result);
+        let response = await bulkCreateScheduleService({
+            arrSchedule: result,//truyen mot object co ten arrSchedule va gia tri la result
+        });
+        console.log('check response bulkCreateScheduleService', response);
 
+        if (response && response.errCode === 0) {
+            toast.success('Save info doctor success');
+        } else {
+            toast.error('Save info doctor failed');
+        }
     }
     render() {
         let { rangeTime } = this.state;

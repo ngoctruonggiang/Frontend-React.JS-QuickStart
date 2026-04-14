@@ -48,6 +48,10 @@ const saveDetailDoctorService = (data) => {
 const getDetailDoctorService = (inputId) => {
   return axios.get(`/api/get-detail-doctor-by-id?id=${inputId}`);
 };
+//tao lich kham cho bac si
+const bulkCreateScheduleService = (data) => {
+  return axios.post(`/api/bulk-create-schedule`, data);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -59,4 +63,5 @@ export {
   getAllDoctorsService,
   saveDetailDoctorService,
   getDetailDoctorService,
+  bulkCreateScheduleService,
 };
