@@ -52,6 +52,10 @@ const getDetailDoctorService = (inputId) => {
 const bulkCreateScheduleService = (data) => {
   return axios.post(`/api/bulk-create-schedule`, data);
 };
+//lay lich kham cua bac si theo ngay
+const getScheduleDoctorByDateService = (doctorId, date) => {
+  return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -64,4 +68,5 @@ export {
   saveDetailDoctorService,
   getDetailDoctorService,
   bulkCreateScheduleService,
+  getScheduleDoctorByDateService,
 };

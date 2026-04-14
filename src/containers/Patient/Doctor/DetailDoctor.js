@@ -4,6 +4,7 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailDoctor.scss';
 import { getDetailDoctorService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
+import DoctorSchedule from './DoctorSchedule';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +16,6 @@ class DetailDoctor extends Component {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {//kiem tra xem co id tren url khong
             let id = this.props.match.params.id;
             let res = await getDetailDoctorService(id);
-            console.log('res detail doctor: ', res);
             if (res && res.errCode === 0) {
                 this.setState({
                     detailDoctor: res.data
@@ -29,7 +29,6 @@ class DetailDoctor extends Component {
         }
     }
     render() {
-        console.log("this.state.detailDoctor", this.state.detailDoctor);
         let { language } = this.props;
         let { detailDoctor } = this.state;
         let nameVi = '';
@@ -57,7 +56,14 @@ class DetailDoctor extends Component {
                         </div>
                     </div>
                     <div className="schedule-doctor">
+                        <div className="content-left">
+                            <DoctorSchedule
+                                doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id : -1}
+                            />
+                        </div>
+                        <div className="content-right">
 
+                        </div>
                     </div>
                     <div className="detail-info-doctor">
                         {detailDoctor && detailDoctor.doctorData && detailDoctor.doctorData.contentHTML && <div dangerouslySetInnerHTML={{ __html: detailDoctor.doctorData.contentHTML }}></div>}

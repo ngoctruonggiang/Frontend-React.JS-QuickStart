@@ -39,6 +39,21 @@
         }
     }
 
+    .schedule-doctor {
+        margin: 0 100px;
+        display: flex;
+        height: 300px;
+        border: 1px solid red;
+
+        .content-left {
+            width: 50%;
+        }
+
+        .content-right {
+            width: 50%;
+        }
+    }
+
     .detail-info-doctor {
         padding: 10px 100px; //tren, phai, duoi, trai theo chieu kim dong ho
         background-color: #f9f9f9;

@@ -117,7 +117,7 @@ class ManageSchedule extends Component {
         let response = await bulkCreateScheduleService({
             arrSchedule: result,//truyen mot object co ten arrSchedule va gia tri la result
         });
-        console.log('check response bulkCreateScheduleService', response);
+        console.log('result', result);
 
         if (response && response.errCode === 0) {
             toast.success('Save info doctor success');
