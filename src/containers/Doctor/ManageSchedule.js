@@ -99,7 +99,7 @@ class ManageSchedule extends Component {
             toast.error('Please select a date');
             return;
         }
-        let formatedDate = new Date(selectedDate);//? convert date to unix timestamp
+        let formatedDate = new Date(selectedDate).getTime();//? convert date to unix timestamp
         if (rangeTime && rangeTime.length > 0 && selectedDoctor && selectedDoctor.value) {
             // 1. Filter: Keep only items where isSelected is true
             // 2. Map: Transform those kept items into the final object shape
@@ -107,13 +107,14 @@ class ManageSchedule extends Component {
                 .filter(item => item.isSelected === true)
                 .map(item => ({ //map qua tung item da duoc filter va return ra 1 object moi co key la doctorId, date, timeType
                     doctorId: selectedDoctor.value,
-                    date: formatedDate,
+                    date: '' + formatedDate,//*convert date to string
                     timeType: item.keyMap,
                 }));
         } else {
             toast.error('Invalid selected time');
             return;
         }
+        console.log('result', result);
         let response = await bulkCreateScheduleService({
             arrSchedule: result,//truyen mot object co ten arrSchedule va gia tri la result
         });
