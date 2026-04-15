@@ -129,6 +129,7 @@ class ManageSchedule extends Component {
     render() {
         let { rangeTime } = this.state;
         let { language } = this.props;
+        let yesterday = moment(new Date()).subtract(1, 'days').toDate();
         return (
             <>
                 <div className="manage-schedule-container">
@@ -151,7 +152,7 @@ class ManageSchedule extends Component {
                                 <DatePicker
                                     onChange={this.handleOnChangeDatePicker}
                                     value={this.state.selectedDate}//value la gia tri hien tai cua date picker duoc truyen vao selectDate state
-                                    minDate={new Date()}
+                                    minDate={yesterday}
                                     className="form-control"
                                     placeholderText="Chọn ngày"
                                 />
