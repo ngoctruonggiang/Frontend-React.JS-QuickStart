@@ -101,6 +101,7 @@ class ManageDoctor extends Component {
             contentHTML: html,
         })
     }
+    //TODO:This function responsible for save doctor information
     handleSaveContentMarkdown() {
         let { hasOldData } = this.state;
         this.props.saveDetailDoctor({
@@ -119,33 +120,41 @@ class ManageDoctor extends Component {
             note: this.state.note,
         });
     }
+    //TODO: This function responsible for display all of doctor infor on input cell when select specific doctor
     handleChangeSelectDoctor = async (selectedOption) => {
+        const EMPTY_STATE = {
+            description: '', contentMarkdown: '', contentHTML: '', hasOldData: false,
+            addressClinic: '', nameClinic: '', note: '',
+            selectedPrice: '', selectedPayment: '', selectedProvince: '',
+        };
+
         this.setState({ selectedDoctor: selectedOption });
-        if (selectedOption.value) {
-            let res = await getDetailDoctorService(selectedOption.value);//selectedDoctor.value la id cua bac si
 
-            if (res && res.errCode === 0 && res.data && res.data.doctorData
-                && res.data.doctorData.description !== '' && res.data.doctorData.contentMarkdown !== ''
-                && res.data.doctorData.contentHTML !== '') {
-                let doctorData = res.data.doctorData;
-                this.setState({
-                    description: doctorData.description,
-                    contentMarkdown: doctorData.contentMarkdown,
-                    contentHTML: doctorData.contentHTML,
-                    hasOldData: true,
-                });
-            } else {
-                this.setState({
-                    description: '',
-                    contentMarkdown: '',
-                    contentHTML: '',
-                    hasOldData: false,
-                });
-            }
+        if (!selectedOption?.value) return this.setState(EMPTY_STATE);//*dung return de thoat khoi ham nay
 
-        }
+        const res = await getDetailDoctorService(selectedOption.value);//*lay thong tin chi tiet cua doctor
+        if (!res || res.errCode !== 0 || !res.data) return this.setState(EMPTY_STATE);
+
+        const { doctorData: md, doctorInforData: info } = res.data;
+        const { listPrice, listPayment, listProvince } = this.state;
+
+        // Only display fields that actually have data; clear the rest
+        this.setState({
+            contentHTML: md?.contentHTML || '',
+            contentMarkdown: md?.contentMarkdown || '',
+            description: md?.description || '',
+            hasOldData: !!md,//TODO:neu md ton tai thi true, con khong thi false
+
+            addressClinic: info?.addressClinic || '',//TODO:neu info ton tai thi lay gia tri, con khong thi lay ''
+            nameClinic: info?.nameClinic || '',
+            note: info?.note || '',
+            selectedPrice: listPrice.find(item => item.value === info?.priceId) || '',//TODO:tim trong listPrice xem co gia tri nao trung voi priceId cua info khong
+            selectedPayment: listPayment.find(item => item.value === info?.paymentId) || '',
+            selectedProvince: listProvince.find(item => item.value === info?.provinceId) || '',
+        });
     }
-    //TODO: handle change select doctor infor
+
+    //TODO:This function responsible for set state when we type in doctor infor select cell
     handleChangeSelectDoctorInfor = async (selectedOption, name) => {//*name la ten cua state ma minh muon set
         console.log('selectedOption and name', selectedOption, name.name);
         let stateName = name.name;//*never mutate state directly
@@ -153,7 +162,7 @@ class ManageDoctor extends Component {
         stateCopy[stateName] = selectedOption;//TODO: attach {label: 'Thẻ ATM', value: "keyMap"} to state.selectedPrice, state.selectedPayment, state.selectedProvince
         this.setState(stateCopy);
     }
-    //TODO: handle change text
+    //TODO: This function responsible for set state when we type in doctor infor text cell
     handleOnChangeText = (event, name) => {
         //*[name] la ten cua state ma minh muon set
         this.setState({
