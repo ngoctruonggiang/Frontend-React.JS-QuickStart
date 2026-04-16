@@ -22,6 +22,8 @@ const initialState = {
     isLoadingAllDoctors: false,
     scheduleTime: [],
     isLoadingScheduleTime: false,
+    allRequiredDoctorInfor: [],
+    isLoadingRequiredDoctorInfor: false,
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -165,9 +167,30 @@ const adminReducer = (state = initialState, action) => {
             copyState.scheduleTime = [];
             return copyState;
         }
+
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START: {
+            let copyState = { ...state };
+            copyState.isLoadingRequiredDoctorInfor = true;
+            return copyState;
+        }
+
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS: {
+            let copyState = { ...state };
+            copyState.allRequiredDoctorInfor = action.data;/*action la object duoc dispatch tu adminAction === {type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS, dataPrice: priceData}*/
+            copyState.isLoadingRequiredDoctorInfor = false;
+            return copyState;//luon luon return state moi khac init state
+        }
+
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED: {
+            let copyState = { ...state };
+            copyState.isLoadingRequiredDoctorInfor = false;
+            copyState.allRequiredDoctorInfor = [];
+            return copyState;
+        }
         default:
             return state;
     }
+
 }
 
 export default adminReducer;

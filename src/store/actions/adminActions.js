@@ -320,4 +320,39 @@ export const fetchAllScheduleTimeFailed = () => {
     }
 }
 
+export const fetchRequiredDoctorInfor = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START });
+            let resPrice = await getAllCodeService('PRICE');
+            let resPayment = await getAllCodeService('PAYMENT');
+            let resProvince = await getAllCodeService('PROVINCE');
+            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0) {
+                let data = {
+                    resPrice: resPrice.data,
+                    resPayment: resPayment.data,
+                    resProvince: resProvince.data
+                }
+                dispatch(fetchRequiredDoctorInforSuccess(data)); //dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(fetchRequiredDoctorInforFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(fetchRequiredDoctorInforFailed())
+        }
+    }
+}
+export const fetchRequiredDoctorInforSuccess = (allRequiredData) => {
+    return {
+        type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+        data: allRequiredData
+    }
+}
+export const fetchRequiredDoctorInforFailed = () => {
+    return {
+        type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED
+    }
+}
+
 //Code chuan cua redux : start (khai bao action) - doing (reducer xu li action) - end (luu vao state

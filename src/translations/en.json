@@ -63,7 +63,16 @@
     "manage-doctor": {
         "title": "Add new doctor information",
         "save": "Save doctor information",
-        "edit": "Confirm edit doctor information"
+        "edit": "Confirm edit doctor information",
+        "select-doctor": "Select doctor",
+        "intro": "Intro",
+        "price": "Price",
+        "province": "Province",
+        "payment": "Payment",
+        "address-clinic": "Address clinic",
+        "name-clinic": "Name clinic",
+        "note": "Note",
+        "count": "Count"
     },
     "manage-schedule": {
         "title": "Manage doctor's schedule",

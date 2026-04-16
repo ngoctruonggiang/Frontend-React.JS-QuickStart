@@ -63,7 +63,16 @@
     "manage-doctor": {
         "title": "Thêm mới thông tin bác sĩ",
         "save": "Lưu thông tin bác sĩ",
-        "edit": "Xác nhận sửa thông tin bác sĩ"
+        "edit": "Xác nhận sửa thông tin bác sĩ",
+        "select-doctor": "Chọn bác sĩ",
+        "intro": "Giới thiệu",
+        "price": "Giá",
+        "province": "Tỉnh",
+        "payment": "Thanh toán",
+        "address-clinic": "Địa chỉ phòng khám",
+        "name-clinic": "Tên phòng khám",
+        "note": "Ghi chú",
+        "count": "Số lượng"
     },
     "manage-schedule": {
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
