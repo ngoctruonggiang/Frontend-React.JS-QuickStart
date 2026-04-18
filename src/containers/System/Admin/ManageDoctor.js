@@ -143,7 +143,7 @@ class ManageDoctor extends Component {
             contentHTML: md?.contentHTML || '',
             contentMarkdown: md?.contentMarkdown || '',
             description: md?.description || '',
-            hasOldData: !!md,//TODO:neu md ton tai thi true, con khong thi false
+            hasOldData: md?.contentMarkdown ? true : false,//TODO:neu contentMarkdown ton tai thi true, con khong thi false
 
             addressClinic: info?.addressClinic || '',//TODO:neu info ton tai thi lay gia tri, con khong thi lay ''
             nameClinic: info?.nameClinic || '',
@@ -156,7 +156,6 @@ class ManageDoctor extends Component {
 
     //TODO:This function responsible for set state when we type in doctor infor select cell
     handleChangeSelectDoctorInfor = async (selectedOption, name) => {//*name la ten cua state ma minh muon set
-        console.log('selectedOption and name', selectedOption, name.name);
         let stateName = name.name;//*never mutate state directly
         let stateCopy = { ...this.state };
         stateCopy[stateName] = selectedOption;//TODO: attach {label: 'Thẻ ATM', value: "keyMap"} to state.selectedPrice, state.selectedPayment, state.selectedProvince
@@ -174,7 +173,6 @@ class ManageDoctor extends Component {
         let { hasOldData } = this.state;
         let { selectedDoctor } = this.state;
         let { language } = this.props;
-        console.log('state', this.state);
         return (
             <>
                 <div className="manage-doctor-container">

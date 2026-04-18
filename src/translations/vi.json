@@ -86,6 +86,17 @@
             "no-schedule": "Không có lịch khám, vui lòng chọn ngày khác",
             "choose": "Chọn",
             "book-free": "và đặt lịch miễn phí"
+        },
+        "extra-infor-doctor": {
+            "text-address": "Địa chỉ khám",
+            "name-clinic": "Tên phòng khám",
+            "detail-address": "Địa chỉ chi tiết",
+            "price": "Giá khám: ",
+            "detail": "Xem chi tiết",
+            "hide-price": "Ẩn bảng giá",
+            "title-price": "Giá khám",
+            "detail-infor": "Chi tiết thông tin",
+            "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: "
         }
     }
 }

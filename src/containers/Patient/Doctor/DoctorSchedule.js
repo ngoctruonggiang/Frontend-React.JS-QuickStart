@@ -1,3 +1,4 @@
+//TODO: file nay de render cac button chon ngay va cac button chon khung gio
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import './DoctorSchedule.scss';
@@ -73,7 +74,6 @@ class DoctorSchedule extends Component {
             let doctorId = this.props.doctorIdFromParent;
             let date = e;
             let res = await getScheduleDoctorByDateService(doctorId, date);
-            console.log('res, e', res, e);
             if (res && res.errCode === 0) {
                 this.setState({
                     allAvailableTime: res.data
@@ -84,8 +84,6 @@ class DoctorSchedule extends Component {
     render() {
         let { allDays, allAvailableTime } = this.state;
         let { language } = this.props;
-        console.log('allAvailableTime', allAvailableTime);
-        console.log('allDays', allDays);
         return (
             <div className="doctor-schedule-container">
                 <div className="all-schedule">

@@ -86,6 +86,17 @@
             "no-schedule": "No schedule, please choose another date",
             "choose": "Choose",
             "book-free": "and book free"
+        },
+        "extra-infor-doctor": {
+            "text-address": "Address of examination",
+            "name-clinic": "Clinic name",
+            "detail-address": "Detail address",
+            "price": "Price of examination: ",
+            "detail": "Detail",
+            "hide-price": "Hide price",
+            "title-price": "Price",
+            "detail-infor": "Detail information",
+            "payment": "Patients can pay by: "
         }
     }
 }
