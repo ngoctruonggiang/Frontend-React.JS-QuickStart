@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
 import './BookingModal.scss';
 import { Modal } from 'reactstrap';
+import ProfileDoctor from '../ProfileDoctor';
+
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +21,8 @@ class BookingModal extends Component {
 
     render() {
         let { isOpenModalBooking, closeModalBooking, dataScheduleTimeModal } = this.props;//*nhan props tu component cha
-
+        console.log('dataScheduleTimeModal', dataScheduleTimeModal);
+        console.log('dataScheduleTimeModal-price', dataScheduleTimeModal?.doctorInforData?.priceData?.valueVi);
         return (
             <>
                 <Modal
@@ -30,7 +33,7 @@ class BookingModal extends Component {
                 >
                     <div className="booking-modal-content">
                         <div className="booking-modal-header">
-                            <span className='booking-modal-title'>Booking Modal</span>
+                            <span className='booking-modal-title'><FormattedMessage id="patient.detail-doctor.book-infor" /></span>
                             <span className='float-right'
                                 onClick={closeModalBooking}// when i click this, React does closeModalBooking() behind the scenes.
                             ><i className='fas fa-times'></i></span>
@@ -38,11 +41,12 @@ class BookingModal extends Component {
                         <div className="booking-modal-body">
                             {/* {JSON.stringify(dataScheduleTimeModal)} */}
                             <div className="doctor-info">
+                                <ProfileDoctor
+                                    doctorIdFromBookingModal={dataScheduleTimeModal?.doctorId}
+                                />
 
                             </div>
-                            <div className="price">
 
-                            </div>
                             <div className="row">
                                 <div className="col-6 form-group">
                                     <label>Họ tên</label>

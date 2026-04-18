@@ -85,7 +85,8 @@
             "schedule": "Lịch khám",
             "no-schedule": "Không có lịch khám, vui lòng chọn ngày khác",
             "choose": "Chọn",
-            "book-free": "và đặt lịch miễn phí"
+            "book-free": "và đặt lịch miễn phí",
+            "book-infor": "Thông tin đặt lịch khám bệnh"
         },
         "extra-infor-doctor": {
             "text-address": "Địa chỉ khám",

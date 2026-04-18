@@ -60,6 +60,10 @@ const getScheduleDoctorByDateService = (doctorId, date) => {
 const getExtraInforDoctorByIdService = (doctorId) => {
   return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
 };
+//lay thong tin profile cua bac si
+const getProfileDoctorByIdService = (doctorId) => {
+  return axios.get(`/api/get-profile-doctor-by-id?doctorId=${doctorId}`);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -74,4 +78,5 @@ export {
   bulkCreateScheduleService,
   getScheduleDoctorByDateService,
   getExtraInforDoctorByIdService,
+  getProfileDoctorByIdService,
 };

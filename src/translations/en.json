@@ -85,7 +85,8 @@
             "schedule": "Schedule",
             "no-schedule": "No schedule, please choose another date",
             "choose": "Choose",
-            "book-free": "and book free"
+            "book-free": "and book free",
+            "book-infor": "Booking information"
         },
         "extra-infor-doctor": {
             "text-address": "Address of examination",

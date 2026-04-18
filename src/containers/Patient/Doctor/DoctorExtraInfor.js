@@ -19,7 +19,6 @@ class DoctorExtraInfor extends Component {
     async componentDidUpdate(prevProps, prevState) {
         //TODO: get extra infor of doctor
         if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
-            console.log('doctorIdFromParent: ', this.props.doctorIdFromParent);
             let res = await getExtraInforDoctorByIdService(this.props.doctorIdFromParent);
             if (res && res.errCode === 0) {
                 this.setState({
