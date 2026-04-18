@@ -97,7 +97,8 @@
             "hide-price": "Hide price",
             "title-price": "Price",
             "detail-infor": "Detail information",
-            "payment": "Patients can pay by: "
+            "payment": "Patients can pay by: ",
+            "book-free": "Free booking"
         }
     }
 }

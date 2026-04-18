@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { getProfileDoctorByIdService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
 import NumberFormat from 'react-number-format';
+import _ from 'lodash';
+import moment from 'moment';
 
 class ProfileDoctor extends Component {
     constructor(props) {
@@ -34,9 +36,35 @@ class ProfileDoctor extends Component {
             this.getProfileDoctor(doctorIdFromBookingModal);
         }
     }
+    //TODO: get value by language
+    getValueByLanguage = (data) => {
+        return this.props.language === LANGUAGES.VI ? data.valueVi : data.valueEn;
+    }
+    //TODO: capitalize first letter
+    capitalizeFirstLetter(string) {//*viết hoa chữ cái đầu tiên
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    //TODO: render time booking to put in modal
+    renderTimeBooking = (dataScheduleTimeModal) => {
+        if (dataScheduleTimeModal && !_.isEmpty(dataScheduleTimeModal)) {
+            let time = this.getValueByLanguage(dataScheduleTimeModal.timeTypeData);
+            let date = +dataScheduleTimeModal.date;//convert timestamp from string to number
+            let language = this.props.language;
+            let result = language === LANGUAGES.VI ? ` ${time} - ${this.capitalizeFirstLetter(moment(date).format('dddd  - DD/MM/YYYY'))}` : ` ${time} - ${this.capitalizeFirstLetter(moment(date).locale('en').format('dddd - MM/DD/YYYY'))}`;//TODO: use moment library to format date
+            return (
+                <>
+                    <div className="time-booking">
+                        {result}
+                    </div>
+                    <div><FormattedMessage id="patient.extra-infor-doctor.book-free" /></div>
+                </>
+            );
+        }
+        return '';
+    }
     render() {
         let { dataProfile } = this.state;
-        let { language } = this.props;
+        let { language, dataScheduleTimeModal } = this.props;
         let nameVi = '';
         let nameEn = '';
         if (dataProfile && dataProfile.positionData) {
@@ -58,8 +86,13 @@ class ProfileDoctor extends Component {
                             <div className="up">
                                 <h5>{language === LANGUAGES.VI ? nameVi : nameEn}</h5>
                             </div>
+
                             <div className="down">
-                                {dataProfile && dataProfile.doctorData && dataProfile.doctorData.description && <span>{dataProfile.doctorData.description}</span>}
+                                {this.props.isShowDescriptionDoctor === true ?
+                                    <>{dataProfile && dataProfile.doctorData && dataProfile.doctorData.description && <span>{dataProfile.doctorData.description}</span>}</>
+                                    :
+                                    <>{this.renderTimeBooking(dataScheduleTimeModal)}</>
+                                }
                             </div>
                         </div>
                     </div>

@@ -43,6 +43,8 @@ class BookingModal extends Component {
                             <div className="doctor-info">
                                 <ProfileDoctor
                                     doctorIdFromBookingModal={dataScheduleTimeModal?.doctorId}
+                                    isShowDescriptionDoctor={false}
+                                    dataScheduleTimeModal={dataScheduleTimeModal}
                                 />
 
                             </div>
