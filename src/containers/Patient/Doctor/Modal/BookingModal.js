@@ -11,6 +11,7 @@ import Select from 'react-select';
 import { postBookAppointmentService } from '../../../../services/userService';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import _ from 'lodash';
 
 
 class BookingModal extends Component {
@@ -27,7 +28,9 @@ class BookingModal extends Component {
             selectedGender: '',
             gender: '',
             date: '',
-            timeType: ''
+            timeType: '',
+            sendEmailDate: '',
+            doctorFullName: ''
         }
     }
     async componentDidMount() {
@@ -35,7 +38,9 @@ class BookingModal extends Component {
         //* cap nhat doctorId khi nhan props tu component cha
         if (this.props.dataScheduleTimeModal) {
             this.setState({
-                doctorId: this.props.dataScheduleTimeModal?.doctorId
+                doctorId: this.props.dataScheduleTimeModal?.doctorId,
+                date: this.props.dataScheduleTimeModal?.date,
+                timeType: this.props.dataScheduleTimeModal?.timeType,
             })
         }
     }
@@ -47,12 +52,24 @@ class BookingModal extends Component {
         }
         //* cap nhat doctorId khi chuyen qua lai giua cac bac si
         if (prevProps.dataScheduleTimeModal !== this.props.dataScheduleTimeModal) {
+            let timeBooking = this.buildTimeBooking(this.props.dataScheduleTimeModal);
+            console.log('timeBooking', timeBooking);
             this.setState({
                 doctorId: this.props.dataScheduleTimeModal?.doctorId,
                 date: this.props.dataScheduleTimeModal?.date,
-                timeType: this.props.dataScheduleTimeModal?.timeType
+                timeType: this.props.dataScheduleTimeModal?.timeType,
+                sendEmailDate: timeBooking
+
             })
         }
+    }
+    //TODO: get value by language
+    getValueByLanguage = (data) => {
+        return this.props.language === LANGUAGES.VI ? data.valueVi : data.valueEn;
+    }
+    //TODO: capitalize first letter
+    capitalizeFirstLetter(string) {//*viết hoa chữ cái đầu tiên
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
     //* to data fit for select-option, label, value
     buildDataGender = (genders) => {
@@ -86,6 +103,24 @@ class BookingModal extends Component {
     handleChangeSelect = (selectedOption) => {
         this.setState({ gender: selectedOption });
     };
+    //TODO: render time booking to put in modal
+    buildTimeBooking = (dataScheduleTimeModal) => {
+        if (dataScheduleTimeModal && !_.isEmpty(dataScheduleTimeModal)) {
+            let time = this.getValueByLanguage(dataScheduleTimeModal.timeTypeData);
+            let date = +dataScheduleTimeModal.date;//convert timestamp from string to number
+            let language = this.props.language;
+            let result = language === LANGUAGES.VI ? ` ${time} - ${this.capitalizeFirstLetter(moment(date).format('dddd  - DD/MM/YYYY'))}` : ` ${time} - ${this.capitalizeFirstLetter(moment(date).locale('en').format('dddd - MM/DD/YYYY'))}`;//TODO: use moment library to format date
+            return (
+                result
+            );
+        }
+        return '';
+    }
+    reciveDoctorFullNameFromProfileDoctorComponent = (fullName) => {
+        this.setState({
+            doctorFullName: fullName
+        })
+    }
     handleConfirmBooking = async () => {
         console.log('handleConfirmBooking');
         //validate input
@@ -97,6 +132,7 @@ class BookingModal extends Component {
         //call api
         let res = await postBookAppointmentService({
             fullName: this.state.fullName,
+            doctorFullName: this.state.doctorFullName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.email,
             address: this.state.address,
@@ -106,6 +142,8 @@ class BookingModal extends Component {
             doctorId: this.state.doctorId,
             timeType: this.state.timeType,
             date: this.state.date,
+            language: this.props.language,//TODO: send language to backend to handle language of email
+            sendEmailDate: this.state.sendEmailDate//TODO: send human readable time booking to backend to send email
         })
         if (res && res.errCode === 0) {
             toast.success(this.props.language === LANGUAGES.VI ? 'Đặt lịch hẹn thành công' : 'Booking successful');
@@ -118,7 +156,8 @@ class BookingModal extends Component {
     render() {
         let { isOpenModalBooking, closeModalBooking, dataScheduleTimeModal } = this.props;//*nhan props tu component cha
         let { language, genders } = this.props;
-        console.log('state', this.state);
+        console.log('check state', this.state);
+        // console.log('dataScheduleTimeModal', dataScheduleTimeModal);
         return (
             <>
                 <Modal
@@ -141,6 +180,7 @@ class BookingModal extends Component {
                                     doctorIdFromBookingModal={dataScheduleTimeModal?.doctorId}
                                     isShowDescriptionDoctor={false}
                                     dataScheduleTimeModal={dataScheduleTimeModal}
+                                    sendDoctorFullNameToBookingModal={this.reciveDoctorFullNameFromProfileDoctorComponent}
                                 />
 
                             </div>

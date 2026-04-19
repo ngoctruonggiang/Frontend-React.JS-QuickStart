@@ -102,13 +102,17 @@
         },
         "booking-modal": {
             "title": "Thông tin đặt lịch khám bệnh",
-            "fullName": "Họ tên",
-            "phoneNumber": "Số điện thoại",
             "email": "Email",
+            "full-name": "Họ tên",
+            "phone-number": "Số điện thoại",
             "address": "Địa chỉ",
             "reason": "Lý do",
-            "birthDay": "Ngày sinh",
+            "birth-day": "Ngày sinh",
             "gender": "Giới tính",
+            "doctor": "Bác sĩ",
+            "time": "Thời gian",
+            "date": "Ngày",
+            "price": "Giá",
             "confirm": "Xác nhận",
             "cancel": "Hủy"
         }

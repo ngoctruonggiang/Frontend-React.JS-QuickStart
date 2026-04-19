@@ -17,14 +17,14 @@ class OutStandingDoctor extends Component {
   componentDidMount() {
     this.props.loadTopDoctor();
   }
-  componentDidUpdate(prevProps, prevState) {//componentDidUpdate luon chay do do co the nhan biet duoc props thay doi
+  ViewDetcomponentDidUpdate(prevProps, prevState) {//componentDidUpdate luon chay do do co the nhan biet duoc props thay doi
     if (prevProps.topDoctorsRedux !== this.props.topDoctorsRedux) {
       this.setState({
         arrDoctors: this.props.topDoctorsRedux,
       })
     }
   }
-  handleViewDetailDoctor(item) {
+  handleailDoctor(item) {
     if (this.props.history) {
       this.props.history.push(`/detail-doctor/${item.id}`);//khi bao route trong file app.js
     }
