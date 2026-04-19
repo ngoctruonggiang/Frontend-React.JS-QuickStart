@@ -99,6 +99,22 @@
             "detail-infor": "Detail information",
             "payment": "Patients can pay by: ",
             "book-free": "Free booking"
+        },
+        "booking-modal": {
+            "title": "Booking information",
+            "email": "Email",
+            "full-name": "Full name",
+            "phone-number": "Phone number",
+            "address": "Address",
+            "reason": "Reason",
+            "birth-day": "Birth day",
+            "gender": "Gender",
+            "doctor": "Doctor",
+            "time": "Time",
+            "date": "Date",
+            "price": "Price",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
         }
     }
 }

@@ -99,6 +99,18 @@
             "detail-infor": "Chi tiết thông tin",
             "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: ",
             "book-free": "Miễn phí đặt lịch"
+        },
+        "booking-modal": {
+            "title": "Thông tin đặt lịch khám bệnh",
+            "fullName": "Họ tên",
+            "phoneNumber": "Số điện thoại",
+            "email": "Email",
+            "address": "Địa chỉ",
+            "reason": "Lý do",
+            "birthDay": "Ngày sinh",
+            "gender": "Giới tính",
+            "confirm": "Xác nhận",
+            "cancel": "Hủy"
         }
     }
 }

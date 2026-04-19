@@ -29,6 +29,6 @@ const appPersistConfig = {
 export default (history) => combineReducers({//combineReducers la ham ket hop cac reducer con lai voi nhau
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),//key: data (cua reducer)
-    app: persistReducer(appPersistConfig, appReducer), //        language: state.app === key === appReducer.language,
+    app: persistReducer(appPersistConfig, appReducer), //        language: state.```app === key === appReducer.language```,
     admin: adminReducer,
 })

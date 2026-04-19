@@ -64,6 +64,10 @@ const getExtraInforDoctorByIdService = (doctorId) => {
 const getProfileDoctorByIdService = (doctorId) => {
   return axios.get(`/api/get-profile-doctor-by-id?doctorId=${doctorId}`);
 };
+//tao lich kham cho bac si
+const postBookAppointmentService = (data) => {
+  return axios.post(`/api/patient-book-appointment`, data);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -79,4 +83,5 @@ export {
   getScheduleDoctorByDateService,
   getExtraInforDoctorByIdService,
   getProfileDoctorByIdService,
+  postBookAppointmentService,
 };
