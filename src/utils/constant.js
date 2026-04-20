@@ -7,6 +7,8 @@ export const path = {
     SYSTEM: '/system',
     DETAIL_DOCTOR: '/detail-doctor/:id',//:id la tham so dong
     DOCTOR: '/doctor',
+    VERIFY_EMAIL_BOOKING: '/verify-booking',
+
 };
 
 export const LANGUAGES = {

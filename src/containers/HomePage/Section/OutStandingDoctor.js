@@ -17,14 +17,15 @@ class OutStandingDoctor extends Component {
   componentDidMount() {
     this.props.loadTopDoctor();
   }
-  ViewDetcomponentDidUpdate(prevProps, prevState) {//componentDidUpdate luon chay do do co the nhan biet duoc props thay doi
+  componentDidUpdate(prevProps, prevState) {//componentDidUpdate luon chay do do co the nhan biet duoc props thay doi
     if (prevProps.topDoctorsRedux !== this.props.topDoctorsRedux) {
       this.setState({
         arrDoctors: this.props.topDoctorsRedux,
       })
     }
   }
-  handleailDoctor(item) {
+  //TODO: move to router of doctor detail page
+  handleViewDetailDoctor(item) {
     if (this.props.history) {
       this.props.history.push(`/detail-doctor/${item.id}`);//khi bao route trong file app.js
     }
@@ -33,6 +34,7 @@ class OutStandingDoctor extends Component {
     let arrayDoctors = this.state.arrDoctors;
     let { language } = this.props;
     // arrayDoctors = arrayDoctors.concat(arrayDoctors).concat(arrayDoctors)
+    console.log('you access in outstanding doctor', this.props)
     return (
       <>
         <div className="section-share section-outstanding-doctor">

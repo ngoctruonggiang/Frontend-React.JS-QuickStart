@@ -20,6 +20,7 @@ import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "../containers/Patient/Doctor/DetailDoctor";
 import Doctor from "../routes/Doctor";
+import VerifyEmail from "../containers/Patient/VerifyEmail";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -41,6 +42,7 @@ class App extends Component {
   }
 
   render() {
+    //*After recive route from URL, we will redirect to the appropriate route then render the suitable component
     return (
       <Fragment>
         <Router history={history}>
@@ -70,6 +72,10 @@ class App extends Component {
                   <Route
                     path={path.DOCTOR}
                     component={userIsAuthenticated(Doctor)} //phai co userIsAuthenticated de kiem tra da login chua
+                  />
+                  <Route
+                    path={path.VERIFY_EMAIL_BOOKING}
+                    component={VerifyEmail}
                   />
                 </Switch>
               </CustomScrollbars>
