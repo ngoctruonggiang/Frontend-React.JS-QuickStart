@@ -72,6 +72,10 @@ const postBookAppointmentService = (data) => {
 const postVerifyBookAppointment = (data) => {
   return axios.post(`/api/verify-book-appointment`, data);
 };
+//tao chuyen khoa
+const createSpecialtyService = (data) => {
+  return axios.post(`/api/create-new-specialty`, data);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -89,4 +93,5 @@ export {
   getProfileDoctorByIdService,
   postBookAppointmentService,
   postVerifyBookAppointment,
+  createSpecialtyService,
 };
