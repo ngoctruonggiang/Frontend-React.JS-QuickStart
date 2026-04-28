@@ -58,7 +58,8 @@
     },
     "homepage": {
         "out-standing-doctor": "Outstanding doctor",
-        "more-info": "More info"
+        "more-info": "More info",
+        "specialty-popular": "popular specialty"
     },
     "manage-doctor": {
         "title": "Add new doctor information",
