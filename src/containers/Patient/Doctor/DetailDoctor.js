@@ -4,8 +4,8 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailDoctor.scss';
 import { getDetailDoctorService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils/constant';
-import DoctorSchedule from './DoctorSchedule';
-import DoctorExtraInfor from './DoctorExtraInfor';
+import DoctorSchedule from '../Doctor/DoctorSchedule';
+import DoctorExtraInfor from '../Doctor/DoctorExtraInfor';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);

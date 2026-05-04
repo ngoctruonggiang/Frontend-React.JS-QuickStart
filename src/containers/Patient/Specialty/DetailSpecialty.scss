@@ -1,0 +1,64 @@
+.detail-specialty-container {
+    height: 100vh;
+
+    .detail-specialty-header {
+        margin-top: 60px;
+        height: 200px;
+    }
+
+    .detail-specialty-body {
+        display: flex;
+        flex-direction: column;
+        margin: 0 66px;
+
+        .each-doctor {
+            display: flex;
+            width: 100%;
+            box-shadow: 0 1px 6px rgb(0 0 0 / 45%);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+
+            .dt-content-left {
+                width: 50%;
+
+                .doctor-image {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    background-size: cover;
+                    background-position: center;
+                }
+            }
+
+            .dt-content-right {
+                width: 50%;
+                padding-left: 5px;
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 5px;
+
+                .doctor-schedule {
+                    padding-bottom: 10px;
+
+                    .doctor-schedule-container {
+                        border: none !important;
+                    }
+                }
+
+                .doctor-extra-infor {
+                    border-top: 1px solid #ccc;
+                    padding-top: 10px;
+
+
+
+                    .doctor-extra-infor-container {
+                        padding-left: 0 !important; //ghi de padding trong file DoctorExtraInfor.js
+                        border: none !important;
+                    }
+                }
+            }
+        }
+
+    }
+}

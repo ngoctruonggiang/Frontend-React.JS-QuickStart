@@ -72,7 +72,9 @@ class ProfileDoctor extends Component {
             nameEn = `${dataProfile.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`;
         }
         //TODO: send doctor full name to booking modal (call back to parent component)
-        this.props.sendDoctorFullNameToBookingModal(language === LANGUAGES.VI ? nameVi : nameEn);
+        if (this.props.sendDoctorFullNameToBookingModal) {
+            this.props.sendDoctorFullNameToBookingModal(language === LANGUAGES.VI ? nameVi : nameEn);
+        }
 
         return (
             <>
