@@ -73,7 +73,9 @@
         "address-clinic": "Địa chỉ phòng khám",
         "name-clinic": "Tên phòng khám",
         "note": "Ghi chú",
-        "count": "Số lượng"
+        "count": "Số lượng",
+        "specialtyId": "Chuyên khoa",
+        "clinicId": "Phòng khám"
     },
     "manage-schedule": {
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",

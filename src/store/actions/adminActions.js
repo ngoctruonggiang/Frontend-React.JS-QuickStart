@@ -2,7 +2,8 @@ import actionTypes from "./actionTypes";
 import {
     getAllCodeService, createNewUserService, getAllUsers,
     deleteUserService, editUserService, getTopDoctorHomeService,
-    getAllDoctorsService, saveDetailDoctorService
+    getAllDoctorsService, saveDetailDoctorService,
+    getAllSpecialtyService, createNewClinicService, getAllClinicService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 
@@ -327,11 +328,15 @@ export const fetchRequiredDoctorInfor = () => {
             let resPrice = await getAllCodeService('PRICE');
             let resPayment = await getAllCodeService('PAYMENT');
             let resProvince = await getAllCodeService('PROVINCE');
-            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0) {
+            let resSpecialty = await getAllSpecialtyService();
+            let resClinic = await getAllClinicService();
+            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0 && resSpecialty && resSpecialty.errCode === 0 && resClinic && resClinic.errCode === 0) {
                 let data = {
                     resPrice: resPrice.data,
                     resPayment: resPayment.data,
-                    resProvince: resProvince.data
+                    resProvince: resProvince.data,
+                    resSpecialty: resSpecialty.data,
+                    resClinic: resClinic.data
                 }
                 dispatch(fetchRequiredDoctorInforSuccess(data)); //dung keyword dispatch de gui action toi reducer
             } else {

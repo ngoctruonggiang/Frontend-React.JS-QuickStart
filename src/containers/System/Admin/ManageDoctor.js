@@ -19,7 +19,7 @@ class ManageDoctor extends Component {
         super(props);
         //this.state la state cua class ManageDoctor
         this.state = {
-            //TODO:save to doctor table
+            //TODO:save to doctor table in database
             contentMarkdown: '',
             contentHTML: '',
             description: '',
@@ -37,6 +37,10 @@ class ManageDoctor extends Component {
             addressClinic: '',
             note: '',
             hasOldData: false,
+            listSpecialty: [],
+            listClinic: [],
+            selectedSpecialty: '',
+            selectedClinic: '',
 
         };
     }
@@ -52,14 +56,18 @@ class ManageDoctor extends Component {
             });
         }
         if (prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor) {
-            let { resPrice, resPayment, resProvince } = this.props.allRequiredDoctorInfor;
+            let { resPrice, resPayment, resProvince, resSpecialty, resClinic } = this.props.allRequiredDoctorInfor;
             let dataPrice = this.buildDataInputSelect(resPrice, 'PRICE');
             let dataPayment = this.buildDataInputSelect(resPayment, 'PAYMENT');
             let dataProvince = this.buildDataInputSelect(resProvince, 'PROVINCE');
+            let dataSpecialty = this.buildDataInputSelect(resSpecialty, 'SPECIALTY');
+            let dataClinic = this.buildDataInputSelect(resClinic, 'CLINIC');
             this.setState({
                 listPrice: dataPrice,
                 listPayment: dataPayment,
                 listProvince: dataProvince,
+                listSpecialty: dataSpecialty,
+                listClinic: dataClinic,
             });
         }
         //khi thay doi ngon ngu thi phai cap nhat lai du lieu cho select
@@ -90,6 +98,16 @@ class ManageDoctor extends Component {
                 } else {
                     object.value = item.keyMap;
                 }
+                //TODO:neu la SPECIALTY thi lay name va id de phan biet
+                if (type === "SPECIALTY") {
+                    object.label = item.name;
+                    object.value = item.id;
+                }
+                //TODO:neu la CLINIC thi lay name va id de phan biet
+                if (type === "CLINIC") {
+                    object.label = item.name;
+                    object.value = item.id;
+                }
                 result.push(object);
             });
         }
@@ -118,6 +136,8 @@ class ManageDoctor extends Component {
             nameClinic: this.state.nameClinic,
             addressClinic: this.state.addressClinic,
             note: this.state.note,
+            specialtyId: this.state.selectedSpecialty && this.state.selectedSpecialty.value ? this.state.selectedSpecialty.value : '',
+            clinicId: this.state.selectedClinic && this.state.selectedClinic.value ? this.state.selectedClinic.value : '',
         });
     }
     //TODO: This function responsible for display all of doctor infor on input cell when select specific doctor
@@ -126,6 +146,7 @@ class ManageDoctor extends Component {
             description: '', contentMarkdown: '', contentHTML: '', hasOldData: false,
             addressClinic: '', nameClinic: '', note: '',
             selectedPrice: '', selectedPayment: '', selectedProvince: '',
+            selectedSpecialty: '', selectedClinic: '',
         };
 
         this.setState({ selectedDoctor: selectedOption });
@@ -134,9 +155,9 @@ class ManageDoctor extends Component {
 
         const res = await getDetailDoctorService(selectedOption.value);//*lay thong tin chi tiet cua doctor
         if (!res || res.errCode !== 0 || !res.data) return this.setState(EMPTY_STATE);
-
+        //* server join nhieu bang nen can phai tach ra doctorData lien quan den bang markdown, con doctorInforData lien quan den bang markdown_info
         const { doctorData: md, doctorInforData: info } = res.data;
-        const { listPrice, listPayment, listProvince } = this.state;
+        const { listPrice, listPayment, listProvince, listSpecialty, listClinic } = this.state;
 
         // Only display fields that actually have data; clear the rest
         this.setState({
@@ -151,6 +172,9 @@ class ManageDoctor extends Component {
             selectedPrice: listPrice.find(item => item.value === info?.priceId) || '',//TODO:tim trong listPrice xem co gia tri nao trung voi priceId cua info khong
             selectedPayment: listPayment.find(item => item.value === info?.paymentId) || '',
             selectedProvince: listProvince.find(item => item.value === info?.provinceId) || '',
+
+            selectedSpecialty: listSpecialty.find(item => item.value === info?.specialtyId) || '',//TODO:tim trong listSpecialty xem co gia tri nao trung voi specialtyId cua info khong
+            selectedClinic: listClinic.find(item => item.value === info?.clinicId) || '',//TODO:tim trong listClinic xem co gia tri nao trung voi clinicId cua info khong
         });
     }
 
@@ -267,6 +291,30 @@ class ManageDoctor extends Component {
                             <input className="form-control" type="text"
                                 value={this.state.note}
                                 onChange={(event) => this.handleOnChangeText(event, 'note')}
+                            />
+                        </div>
+                        <div className="col-4 form-group">
+                            <label>
+                                <FormattedMessage id="manage-doctor.specialtyId" />
+                            </label>
+                            <Select
+                                value={this.state.selectedSpecialty}//item duoc chon hien tai cua select gan cho state selectedDoctor
+                                onChange={this.handleChangeSelectDoctorInfor}
+                                options={this.state.listSpecialty}//danh sach cac item cua select
+                                placeholder={<FormattedMessage id="manage-doctor.specialtyId" />}
+                                name="selectedSpecialty"
+                            />
+                        </div>
+                        <div className="col-4 form-group">
+                            <label>
+                                <FormattedMessage id="manage-doctor.clinicId" />
+                            </label>
+                            <Select
+                                value={this.state.selectedClinic}//item duoc chon hien tai cua select gan cho state selectedDoctor
+                                onChange={this.handleChangeSelectDoctorInfor}
+                                options={this.state.listClinic}//danh sach cac item cua select
+                                placeholder={<FormattedMessage id="manage-doctor.clinicId" />}
+                                name="selectedClinic"//day la ten de xac dinh khi handler onChange
                             />
                         </div>
                     </div>

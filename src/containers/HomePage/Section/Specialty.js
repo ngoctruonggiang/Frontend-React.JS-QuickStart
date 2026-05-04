@@ -9,6 +9,7 @@ import shogun from "../../../assets/specialty/Raiden.jpg";
 import tuyet from "../../../assets/specialty/TuyettBangDe2.jpg";
 import { getAllSpecialtyService } from "../../../services/userService";
 import * as actions from '../../../store/actions';
+import { withRouter } from 'react-router-dom';//de nhan tham so dong id
 
 class Specialty extends Component {
 
@@ -28,6 +29,12 @@ class Specialty extends Component {
             })
         }
     }
+    handleViewDetailSpecialty(item) {
+        if (this.props.history) {
+            this.props.history.push(`/detail-specialty/${item.id}`);
+            //* 'id' la tham so dong de truyen tham so id vao trang detail-specialty duoc dinh nghia o app js va file Utils\constant.js
+        }
+    }
     render() {
         let { arrSpecialty } = this.state;
         console.log('you access in specialty', this.props);
@@ -44,7 +51,7 @@ class Specialty extends Component {
                             <Slider {...this.props.settings}>
                                 {arrSpecialty && arrSpecialty.length > 0 && arrSpecialty.map((item, index) => {
                                     return (
-                                        <div className="section-customize" key={index}>
+                                        <div className="section-customize" key={index} onClick={() => this.handleViewDetailSpecialty(item)}>{/*TODO: move to router of specialty detail page with id*/}
                                             <div className="bg-image"
                                                 style={{ backgroundImage: `url(${item.image})` }}></div>
                                             <div>{item.name}</div>
@@ -75,4 +82,4 @@ const mapDispatchToProps = (dispatch) => {//truy cap ham nay qua props.changeLan
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specialty));

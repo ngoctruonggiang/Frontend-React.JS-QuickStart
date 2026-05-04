@@ -27,7 +27,8 @@ class OutStandingDoctor extends Component {
   //TODO: move to router of doctor detail page
   handleViewDetailDoctor(item) {
     if (this.props.history) {
-      this.props.history.push(`/detail-doctor/${item.id}`);//khi bao route trong file app.js
+      this.props.history.push(`/detail-doctor/${item.id}`);
+      //* 'id' la tham so dong de truyen tham so id vao trang detail-doctor duoc dinh nghia o file Utils\constant.js
     }
   }
   render() {

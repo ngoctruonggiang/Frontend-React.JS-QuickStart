@@ -59,7 +59,7 @@
     "homepage": {
         "out-standing-doctor": "Outstanding doctor",
         "more-info": "More info",
-        "specialty-popular": "popular specialty"
+        "specialty-popular": "Popular specialty"
     },
     "manage-doctor": {
         "title": "Add new doctor information",
@@ -73,7 +73,9 @@
         "address-clinic": "Address clinic",
         "name-clinic": "Name clinic",
         "note": "Note",
-        "count": "Count"
+        "count": "Count",
+        "specialtyId": "Specialty",
+        "clinicId": "Clinic"
     },
     "manage-schedule": {
         "title": "Manage doctor's schedule",

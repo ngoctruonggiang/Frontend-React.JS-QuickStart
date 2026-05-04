@@ -76,9 +76,17 @@ const postVerifyBookAppointment = (data) => {
 const createSpecialtyService = (data) => {
   return axios.post(`/api/create-new-specialty`, data);
 };
+//tao phong kham
+const createClinicService = (data) => {
+  return axios.post(`/api/create-new-clinic`, data);
+};
 //lay ra danh sach tat ca cac chuyen khoa
 const getAllSpecialtyService = () => {
   return axios.get(`/api/get-all-specialty`);
+};
+//lay ra danh sach tat ca cac phong kham
+const getAllClinicService = () => {
+  return axios.get(`/api/get-all-clinic`);
 };
 export {
   handleLoginAPI,
@@ -99,4 +107,6 @@ export {
   postVerifyBookAppointment,
   createSpecialtyService,
   getAllSpecialtyService,
+  createClinicService,
+  getAllClinicService,
 };
