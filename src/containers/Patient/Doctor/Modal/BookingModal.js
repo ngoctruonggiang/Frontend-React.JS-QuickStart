@@ -156,7 +156,6 @@ class BookingModal extends Component {
     render() {
         let { isOpenModalBooking, closeModalBooking, dataScheduleTimeModal } = this.props;//*nhan props tu component cha
         let { language, genders } = this.props;
-        console.log('check state', this.state);
         // console.log('dataScheduleTimeModal', dataScheduleTimeModal);
         return (
             <>

@@ -24,6 +24,8 @@ const initialState = {
     isLoadingScheduleTime: false,
     allRequiredDoctorInfor: [],
     isLoadingRequiredDoctorInfor: false,
+    allProvinces: [],
+    isLoadingProvinces: false,
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -85,6 +87,26 @@ const adminReducer = (state = initialState, action) => {
             let copyState = { ...state };
             copyState.isLoadingRole = false;
             copyState.roles = [];
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_PROVINCE_START: {
+            let copyState = { ...state };
+            copyState.isLoadingProvinces = true;
+            return copyState;
+        }
+
+        case actionTypes.FETCH_ALL_PROVINCE_SUCCESS: {
+            let copyState = { ...state };
+            copyState.allProvinces = action.dataProvince;
+            copyState.isLoadingProvinces = false;
+            return copyState;//luon luon return state moi khac init state
+        }
+
+        case actionTypes.FETCH_ALL_PROVINCE_FAILED: {
+            let copyState = { ...state };
+            copyState.isLoadingProvinces = false;
+            copyState.allProvinces = [];
             return copyState;
         }
 

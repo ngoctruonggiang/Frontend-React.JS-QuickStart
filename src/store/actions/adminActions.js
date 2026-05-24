@@ -96,6 +96,34 @@ export const fetchRoleFailed = () => {
     }
 }
 
+export const fetchProvinceStart = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_PROVINCE_START });
+            let res = await getAllCodeService('PROVINCE');
+            if (res && res.errCode === 0) {
+                dispatch(fetchProvinceSuccess(res.data))//dung keyword dispatch de gui action toi reducer
+            } else {
+                dispatch(fetchProvinceFailed())
+            }
+        } catch (e) {
+            console.log(e);
+            dispatch(fetchProvinceFailed())
+        }
+    }
+}
+export const fetchProvinceSuccess = (provinceData) => {
+    return {
+        type: actionTypes.FETCH_ALL_PROVINCE_SUCCESS,
+        dataProvince: provinceData
+    }
+}
+export const fetchProvinceFailed = () => {
+    return {
+        type: actionTypes.FETCH_ALL_PROVINCE_FAILED
+    }
+}
+
 export const createNewUser = (data) => {
     return async (dispatch) => {
         try {
