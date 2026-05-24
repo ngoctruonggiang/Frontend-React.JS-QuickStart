@@ -180,6 +180,8 @@ class BookingModal extends Component {
                                     isShowDescriptionDoctor={false}
                                     dataScheduleTimeModal={dataScheduleTimeModal}
                                     sendDoctorFullNameToBookingModal={this.reciveDoctorFullNameFromProfileDoctorComponent}
+                                    isShowLinkDetail={false}
+                                    isShowPrice={true}
                                 />
 
                             </div>

@@ -81,11 +81,11 @@ class DetailSpecialty extends Component {
 
         return result;
     }
-
+    //TODO: filter doctor theo province duoc selected
     handleOnChangeSelect = async (e) => {
         console.log('check e', e.target.value);
         let id = this.props.match.params.id;
-        let location = e.target.value;
+        let location = e.target.value;//truyen vao location de filter doctor theo province
         let res = await getDetailSpecialtyByIdService(id, location);
         if (res && res.errCode === 0 && !_.isEmpty(res.data)) {
             let arrDoctorId = [];
@@ -118,7 +118,7 @@ class DetailSpecialty extends Component {
                     <div className='detail-specialty-body'>
                         <div className='search-specialty'>
                             <select onChange={(e) => this.handleOnChangeSelect(e)}>
-                                <option value="ALL">Toàn quốc</option>
+                                <option value="ALL">{language === LANGUAGES.VI ? "Toàn quốc" : "All locations"}</option>
                                 {this.buildDataInputSelect().map((item, index) => {
                                     return (
                                         <option key={index} value={item.value}>{item.label}</option>
@@ -134,6 +134,8 @@ class DetailSpecialty extends Component {
                                             <ProfileDoctor
                                                 doctorIdFromBookingModal={item}
                                                 isShowDescriptionDoctor={true}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={false}
                                             />
                                         </div>
 

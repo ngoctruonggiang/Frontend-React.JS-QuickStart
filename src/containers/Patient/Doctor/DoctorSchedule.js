@@ -23,7 +23,19 @@ class DoctorSchedule extends Component {
         let allDays = this.getArrDays();
         this.setState({
             allDays: allDays
-        })
+        });
+        //gọi api để lấy lịch của bác sĩ mà không cần phải select
+        if (this.props.doctorIdFromParent && this.props.doctorIdFromParent !== -1) {
+            let doctorId = this.props.doctorIdFromParent;
+            if (allDays && allDays.length > 0) {
+                let res = await getScheduleDoctorByDateService(doctorId, allDays[0].value);
+                if (res && res.errCode === 0) {
+                    this.setState({
+                        allAvailableTime: res.data
+                    })
+                }
+            }
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {

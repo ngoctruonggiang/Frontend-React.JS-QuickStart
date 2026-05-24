@@ -4,6 +4,16 @@
     .detail-specialty-header {
         margin: 60px 66px 10px 66px;
         height: 200px;
+        border: 1px solid red;
+        padding: 10px;
+        background: linear-gradient(135deg, #fcfbfb 0%, #eeeef2 100%);
+
+        h1,
+        h2,
+        h3 {
+            font-weight: 600;
+            font-size: 16px;
+        }
     }
 
     .detail-specialty-body {
@@ -11,7 +21,15 @@
         flex-direction: column;
         margin: 0 66px;
 
-        .search-specialty {}
+        .search-specialty {
+            select {
+                padding: 5px 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                outline: none;
+                cursor: pointer;
+            }
+        }
 
         .each-doctor {
             display: flex;
@@ -57,6 +75,19 @@
                     .doctor-extra-infor-container {
                         padding-left: 0 !important; //ghi de padding trong file DoctorExtraInfor.js
                         border: none !important;
+                    }
+                }
+            }
+
+            .profile-doctor-container {
+                .down {
+                    padding-right: 10px;
+                }
+
+                .more-info {
+                    a {
+                        color: #45c3d2;
+                        cursor: pointer;
                     }
                 }
             }
