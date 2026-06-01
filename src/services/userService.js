@@ -92,6 +92,10 @@ const getAllClinicService = () => {
 const getDetailSpecialtyByIdService = (inputId, location) => {
   return axios.get(`/api/get-detail-specialty-by-id?id=${inputId}&location=${location}`);
 };
+//lay ra danh sach tat ca cac phong kham theo location
+const getDetailClinicByIdService = (inputId) => {
+  return axios.get(`/api/get-detail-clinic-by-id?id=${inputId}`);
+};
 export {
   handleLoginAPI,
   getAllUsers,
@@ -114,4 +118,5 @@ export {
   createClinicService,
   getAllClinicService,
   getDetailSpecialtyByIdService,
+  getDetailClinicByIdService
 };

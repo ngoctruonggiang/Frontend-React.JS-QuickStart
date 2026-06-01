@@ -11,6 +11,7 @@ export const path = {
 
     //path cho patient
     DETAIL_SPECIALTY: '/detail-specialty/:id',//id la tham so dong de truyen tham so id vao trang detail-specialty
+    DETAIL_CLINIC: '/detail-clinic/:id',//id la tham so dong de truyen tham so id vao trang detail-clinic
 
 };
 

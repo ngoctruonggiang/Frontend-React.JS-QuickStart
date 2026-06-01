@@ -1,0 +1,96 @@
+.detail-clinic-container {
+    .detail-clinic-header {
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        overflow-y: auto;
+
+        /* Standard scrollbar properties for Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+        /* For Chrome, Safari, and Opera */
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .detail-info-clinic {
+            padding: 50px 60px;
+            background-color: rgba(255, 255, 255, 0.75);
+            /* Light glassmorphism overlay */
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .detail-clinic-name {
+                font-size: 26px;
+                font-weight: 700;
+                color: #333;
+                text-transform: uppercase;
+                border-bottom: 2px solid #45c3d2;
+                padding-bottom: 8px;
+                align-self: flex-start;
+            }
+
+            .detail-clinic-address {
+                font-size: 15px;
+                color: #555;
+                font-style: italic;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                &::before {
+                    content: "📍";
+                }
+            }
+
+            .detail-clinic-description {
+                font-size: 14.5px;
+                color: #444;
+                line-height: 1.6;
+                text-align: justify;
+            }
+        }
+    }
+
+    .detail-clinic-body {
+        padding: 0 15px 15px 15px;
+
+        .each-doctor {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+
+            .dt-content-left {
+                width: 45%;
+                padding-right: 10px;
+            }
+
+            .dt-content-right {
+                width: 55%;
+                padding-left: 10px;
+
+                .doctor-schedule {
+                    margin: 0 -10px;
+                }
+            }
+        }
+    }
+}
