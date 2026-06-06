@@ -96,9 +96,15 @@ const getDetailSpecialtyByIdService = (inputId, location) => {
 const getDetailClinicByIdService = (inputId) => {
   return axios.get(`/api/get-detail-clinic-by-id?id=${inputId}`);
 };
+//lay ra danh sach tat ca cac benh nhan
 const getAllPatientForDoctorService = (doctorId, date) => {
   return axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}&date=${date}`);
 };
+//gui don thuoc cho benh nhan
+const sendRemedyService = (data) => {
+  return axios.post(`/api/send-remedy`, data);
+};
+
 export {
   handleLoginAPI,
   getAllUsers,
@@ -122,6 +128,7 @@ export {
   getAllClinicService,
   getDetailSpecialtyByIdService,
   getDetailClinicByIdService,
-  getAllPatientForDoctorService
+  getAllPatientForDoctorService,
+  sendRemedyService,
 
 };

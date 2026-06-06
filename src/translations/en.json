@@ -40,7 +40,8 @@
             "manage-schedule": "Manage schedule",
             "schedule": "Schedule",
             "manage-patient": "Manage patient",
-            "patient": "Patient"
+            "patient": "Patient",
+            "remedy-modal-title": "Send invoice successfully"
         }
     },
     "manage-user": {
@@ -123,6 +124,13 @@
             "date": "Date",
             "price": "Price",
             "confirm": "Confirm",
+            "cancel": "Cancel"
+        }
+    },
+    "doctor": {
+        "remedy-modal": {
+            "remedy": "Invoice / Remedy file",
+            "confirm": "Send",
             "cancel": "Cancel"
         }
     }

@@ -3,15 +3,19 @@ import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
 import './ManagePatient.scss';
 import DatePicker from '../../components/Input/DatePicker';
-import { getAllPatientForDoctorService } from '../../services/userService';
-
+import { getAllPatientForDoctorService, sendRemedyService } from '../../services/userService';
+import RemedyModal from './RemedyModal';
+import { toast } from 'react-toastify';
 
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedDate: new Date(new Date().setHours(0, 0, 0, 0)),//để lấy đầu ngày thì mới so sánh được, chứ lấy cả giờ phút giây thì không thể bằng được
-            dataPatient: []
+            dataPatient: [],
+            isOpenRemedyModal: false,
+            dataModal: {},
+            isShowLoading: false,
         }
     }
     async componentDidMount() {
@@ -49,15 +53,45 @@ class ManagePatient extends Component {
         )
     }
 
-    handleConfirm = (id) => {
-        console.log('handleConfirm', id)
+    handleConfirm = (item) => {//item === dataPatient
+        let data = {
+            doctorId: item.doctorId,
+            patientId: item.patientId,
+            email: item.User.email,
+            timeType: item.timeType,
+            patientName: item.User.lastName + ' ' + item.User.firstName
+        }
+        this.setState({ isOpenRemedyModal: true, dataModal: data })
     }
-    handleSendInvoice = (id) => {
-        console.log('handleSendInvoice', id)
+    closeModalRemedy = () => {
+        this.setState({ isOpenRemedyModal: false })
     }
+
+    sendRemedy = async (dataChild) => {
+        console.log('ManagePatient check dataFromModal:', dataChild);
+        let { dataModal } = this.state;
+        let res = await sendRemedyService({
+            email: dataChild.email,
+            imageBase64: dataChild.imgBase64,
+            doctorId: dataModal.doctorId,
+            patientId: dataModal.patientId,
+            timeType: dataModal.timeType,
+            language: this.props.language,
+            patientName: dataModal.patientName
+        });
+        if (res && res.errCode === 0) {
+            toast.success('Gửi đơn thuốc thành công');
+            this.closeModalRemedy();
+            await this.getDataPatient();//TODO: sau khi gửi đơn thuốc thì cần gọi lại API để load danh sách bệnh nhân
+        } else {
+            toast.error('Gửi đơn thuốc thất bại');
+        }
+        this.setState({ isOpenRemedyModal: false });
+    }
+
     render() {
-        console.log('dataPatient', this.state.dataPatient)
-        let { dataPatient } = this.state;
+        let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
+        let { language } = this.props;
         return (
             <>
                 <div className="manage-patient-container">
@@ -73,7 +107,7 @@ class ManagePatient extends Component {
                                 onChange={this.handleOnChangeDatePicker}
                                 value={this.state.selectedDate}//value la gia tri hien tai cua date picker duoc truyen vao selectDate state
                                 className="form-control"
-                                placeholderText="Chọn ngày"
+                                placeholderText={language === 'vi' ? "Chọn ngày" : "Choose date"}
                             />
                         </div>
                         <div className="col-12">
@@ -92,23 +126,25 @@ class ManagePatient extends Component {
                                     {
                                         dataPatient && dataPatient.length > 0 ? (
                                             dataPatient.map((item, index) => {
+                                                let gender = language === 'vi' ? item.User.genderData.valueVi : item.User.genderData.valueEn;
+                                                let time = language === 'vi' ? item.Allcode_Booking_TimeType.valueVi : item.Allcode_Booking_TimeType.valueEn;
+
                                                 return (
                                                     <tr key={index}>
                                                         <td>{index + 1}</td>
-                                                        <td>{item.Allcode_Booking_TimeType.valueVi}</td>
+                                                        <td>{time}</td>
                                                         <td>{item.User.lastName} {item.User.firstName}</td>
-                                                        <td>{item.User.genderData && item.User.genderData.valueVi ? item.User.genderData.valueVi : ''}</td>
+                                                        <td>{gender}</td>
                                                         <td>{item.User.phoneNumber}</td>
                                                         <td>
-                                                            <button onClick={() => this.handleConfirm(item.id)} className="btn-confirm">Xác nhận</button>
-                                                            <button onClick={() => this.handleSendInvoice(item.id)} className="btn-send-invoice">Gửi hóa đơn</button>
+                                                            <button onClick={() => this.handleConfirm(item)} className="btn-confirm">Xác nhận</button>
                                                         </td>
                                                     </tr>
                                                 )
                                             })
                                         ) : (
                                             <tr>
-                                                <td colSpan="6">Không có dữ liệu</td>
+                                                <td colSpan="6" style={{ textAlign: 'center' }}>Không có dữ liệu</td>
                                             </tr>
                                         )
                                     }
@@ -119,6 +155,12 @@ class ManagePatient extends Component {
 
                     </div>
                 </div>
+                <RemedyModal
+                    isOpen={isOpenRemedyModal}
+                    dataModal={dataModal}
+                    closeModal={this.closeModalRemedy}
+                    sendRemedy={this.sendRemedy}//chi gui dinh nghia ham chu khong phai goi no luon
+                />
             </>
         );
     }
