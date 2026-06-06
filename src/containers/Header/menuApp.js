@@ -66,9 +66,14 @@ export const doctorMenu = [
     {
         name: 'menu.admin.manage-user',
         menus: [
-            { //hệ thống khai bao menu de phan quyen
+            { //quản lí lịch khám của bác sĩ
                 name: 'menu.doctor.manage-schedule',//ten cua menu cha-quan li nguoi dung
                 link: '/doctor/manage-schedule',
+            },
+
+            { //quản lí bệnh nhân khám bệnh của bác sĩ
+                name: 'menu.doctor.manage-patient',//ten cua menu cha-quan li nguoi dung
+                link: '/doctor/manage-patient',
             }
         ]
     }

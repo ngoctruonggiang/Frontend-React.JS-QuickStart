@@ -38,7 +38,9 @@
         },
         "doctor": {
             "manage-schedule": "Quản lý lịch khám",
-            "schedule": "Quản lý kế hoạch khám bệnh"
+            "schedule": "Quản lý kế hoạch khám bệnh",
+            "manage-patient": "Quản lý bệnh nhân",
+            "patient": "Bệnh nhân"
         }
     },
     "manage-user": {
@@ -82,6 +84,10 @@
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",
         "save": "Lưu thông tin lịch khám"
+    },
+    "manage-patient": {
+        "title": "Quản lý bệnh nhân",
+        "choose-date": "Chọn ngày"
     },
     "patient": {
         "detail-doctor": {
