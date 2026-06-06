@@ -14,6 +14,25 @@
         .m-p-content {
             padding: 20px 0;
 
+            .btn-confirm {
+                padding: 5px 10px;
+                margin: 5px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: orange;
+                color: black;
+            }
+
+            .btn-send-invoice {
+                padding: 5px 10px;
+                margin: 5px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: #007bff;
+                color: white;
+            }
         }
     }
 }
