@@ -50,10 +50,14 @@ class Specialty extends Component {
                         <div className="section-body">
                             <Slider {...this.props.settings}>
                                 {arrSpecialty && arrSpecialty.length > 0 && arrSpecialty.map((item, index) => {
+                                    let imageBase64 = '';
+                                    if (item.image) {
+                                        imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                    }
                                     return (
                                         <div className="section-customize" key={index} onClick={() => this.handleViewDetailSpecialty(item)}>{/*TODO: move to router of specialty detail page with id*/}
                                             <div className="bg-image"
-                                                style={{ backgroundImage: `url(${item.image})` }}></div>
+                                                style={{ backgroundImage: `url(${imageBase64})` }}></div>
                                             <div>{item.name}</div>
                                         </div>
                                     )

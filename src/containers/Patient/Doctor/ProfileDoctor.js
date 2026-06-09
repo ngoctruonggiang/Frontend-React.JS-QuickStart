@@ -78,13 +78,18 @@ class ProfileDoctor extends Component {
             this.props.sendDoctorFullNameToBookingModal(language === LANGUAGES.VI ? nameVi : nameEn);
         }
 
+        let imageBase64 = '';
+        if (dataProfile && dataProfile.image) {
+            imageBase64 = new Buffer(dataProfile.image, 'base64').toString('binary');
+        }
+
         return (
             <>
                 <div className="profile-doctor-container">
 
                     <div className="intro-doctor">
                         <div className="content-left"
-                            style={{ backgroundImage: `url(${dataProfile.image ? dataProfile.image : ''})` }}
+                            style={{ backgroundImage: `url(${imageBase64})` }}
                         >
                         </div>
                         <div className="content-right">

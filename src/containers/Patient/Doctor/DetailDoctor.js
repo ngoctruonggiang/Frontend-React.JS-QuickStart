@@ -42,13 +42,17 @@ class DetailDoctor extends Component {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
         }
+        let imageBase64 = '';
+        if (detailDoctor && detailDoctor.image) {
+            imageBase64 = new Buffer(detailDoctor.image, 'base64').toString('binary');
+        }
         return (
             <>
                 <HomeHeader isShowBanner={false} />
                 <div className="doctor-detail-container">
                     <div className="intro-doctor">
                         <div className="content-left"
-                            style={{ backgroundImage: `url(${detailDoctor.image ? detailDoctor.image : ''})` }}
+                            style={{ backgroundImage: `url(${imageBase64})` }}
                         >
                         </div>
                         <div className="content-right">
