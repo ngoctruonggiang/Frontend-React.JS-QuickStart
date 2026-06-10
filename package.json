@@ -2,6 +2,9 @@
   "name": "react-app-hoi-dan-it",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.19.0"
+  },
   "dependencies": {
     "@formatjs/intl-pluralrules": "^3.5.6",
     "@formatjs/intl-relativetimeformat": "^7.3.6",
@@ -9,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "connected-react-router": "^6.9.1",
+    "cross-env": "^7.0.3",
     "lodash": "^4.17.21",
     "markdown-it": "^12.1.0",
     "moment": "^2.29.0",
@@ -43,8 +47,8 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
