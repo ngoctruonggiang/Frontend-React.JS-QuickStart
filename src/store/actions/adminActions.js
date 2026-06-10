@@ -16,7 +16,7 @@ export const fetchGenderStart = () => {
     return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.FETCH_GENDER_START });
-            let res = await getAllCodeService('gender');
+            let res = await getAllCodeService('GENDER');
             if (res && res.errCode === 0) {
                 dispatch(fetchGenderSuccess(res.data))//dung keyword dispatch de gui action toi reducer
             } else {
@@ -44,7 +44,7 @@ export const fetchPositionStart = () => {
     return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.FETCH_POSITION_START });
-            let res = await getAllCodeService('position');
+            let res = await getAllCodeService('POSITION');
             if (res && res.errCode === 0) {
                 dispatch(fetchPositionSuccess(res.data))//dung keyword dispatch de gui action toi reducer
             } else {
@@ -72,7 +72,7 @@ export const fetchRoleStart = () => {
     return async (dispatch) => {
         try {
             dispatch({ type: actionTypes.FETCH_ROLE_START });
-            let res = await getAllCodeService('role');
+            let res = await getAllCodeService('ROLE');
             if (res && res.errCode === 0) {
                 dispatch(fetchRoleSuccess(res.data))//dung keyword dispatch de gui action toi reducer
             } else {
