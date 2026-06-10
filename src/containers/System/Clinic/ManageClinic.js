@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
 import './ManageClinic.scss';
 import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite/cjs';
+import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import { CommonUtils } from '../../../utils';
 import Lightbox from 'react-image-lightbox';
